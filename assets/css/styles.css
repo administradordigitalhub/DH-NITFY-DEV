@@ -1,0 +1,175 @@
+.background-custom-digital {
+  background-color: #7270fc !important;
+}
+
+.content__header::before {
+  background-color: #7270fc !important;
+}
+
+.color-butoon-dashboard {
+  background-color: #7270fc !important;
+}
+
+table {
+  display: block;
+  overflow: auto;
+  max-height: 370px;
+  white-space: nowrap;
+}
+
+.table-general {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+
+  thead tr th:nth-child(1) {
+    padding: 0 20px;
+  }
+  thead tr th:nth-child(2) {
+    padding: 0 20px;
+  }
+  thead tr th:nth-child(3) {
+    padding: 0 20px;
+  }
+  thead tr th:nth-child(4) {
+    padding: 0 15px;
+  }
+  thead tr th:nth-child(5) {
+    padding: 0 15px;
+  }
+  tbody tr td:nth-child(6) {
+    padding: 0 20px;
+  }
+  tbody tr td:nth-child(8) {
+    padding: 0 20px;
+  }
+  tbody tr td:nth-child(9) {
+    padding: 0 10px;
+  }
+  tbody tr td:nth-child(10) {
+    padding: 0 20px;
+  }
+}
+
+.table-general tr:nth-child(odd):not(.detail) {
+  background-color: #f2f2f2;
+}
+
+.table-general tr:nth-child(even):not(.detail),
+.table-general tr.detail {
+  background-color: #ffffff;
+}
+
+.table-general tr:hover:not(.detail) {
+  background-color: #ddd;
+}
+
+.detail td p {
+  text-align: left;
+  background-color: #ffffff;
+  margin: 8px 0; /* Añade margen arriba y abajo para separarlos visualmente */
+  padding: 0;
+  line-height: 1.2;
+}
+
+.button-custom {
+  padding: 8px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin: 0;
+  background-color: #ffffff00;
+}
+
+.detail-title {
+  font-weight: bold; /* Esto pondrá el título en negrita */
+  margin-bottom: 5px; /* Ajusta como sea necesario para dar espacio debajo del título */
+  text-align: left;
+}
+
+/* Estilos existentes... */
+
+.detail-info {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.detail-info tr {
+  border-bottom: 1px solid #ccc; /* Agrega separación entre las filas de detalles */
+}
+
+.detail-info td {
+  padding: 4px 8px; /* Ajusta el relleno para cada celda de detalles */
+}
+
+.detail-info .value {
+  text-align: left;
+}
+
+.detail-title {
+  font-weight: bold;
+  text-align: left;
+  margin: 8px 0; /* Agrega espacio encima y debajo del título */
+}
+
+.containerFlex div p {
+  margin-bottom: 0;
+}
+
+.gridContainerPerfilBuscado {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  overflow-y: auto;
+}
+
+.gridContainerPerfil {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.gridContainerSalario {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  overflow-y: auto;
+}
+.gridContainerContacto {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  overflow-y: auto;
+}
+.gridContainerComentario {
+  display: grid;
+  width: 100%;
+  overflow-y: auto;
+  p {
+    white-space: normal;
+  }
+}
+.item {
+  border: none;
+  border-radius: 4px;
+}
+.titlePerfil {
+  font-size: 12px;
+  font-weight: 510;
+  color: black;
+}
+
+.itemGrid {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 20px;
+  margin-top: 10px;
+  p {
+    margin: 5px !important;
+  }
+}
