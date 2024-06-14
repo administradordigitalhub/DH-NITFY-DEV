@@ -1,0 +1,257 @@
+.background-custom-digital {
+  background-color: #7270fc !important;
+}
+
+.content__header::before {
+  background-color: #7270fc !important;
+}
+
+.color-butoon-dashboard {
+  background-color: #7270fc !important;
+}
+
+.color-button-search {
+  background-color: #7270fc !important;
+  border-color: #7270fc !important;
+}
+
+.color-button-next {
+  background-color: #7270fc !important;
+  border: #7270fc !important;
+}
+
+/* table {
+  display: block;
+  overflow: auto;
+  max-height: 370px !important;
+  white-space: nowrap;
+} */
+
+.table-general {
+  border-collapse: collapse;
+  text-align: center;
+
+  /*Nuevo*/
+  width: 100%;
+  table-layout: fixed;
+  /*Nuevo*/
+
+  /* thead tr th {
+    padding: 0 20px;
+  } */
+}
+
+.table-general thead th {
+  background-color: #ffffff; /* Nuevo color de fondo para las cabeceras */
+  text-align: center;
+}
+
+.table-general tr:nth-child(odd):not(.detail) {
+  background-color: #f2f2f2;
+}
+
+.table-general tr:nth-child(even):not(.detail),
+.table-general tr.detail {
+  background-color: #ffffff;
+}
+
+.table-general tr:hover:not(.detail) {
+  background-color: #ddd;
+}
+
+.table-general th:nth-child(1) {
+  width: 5%;
+}
+.table-general th:nth-child(2) {
+  width: 20%;
+}
+.table-general th:nth-child(3) {
+  width: 10%;
+}
+.table-general th:nth-child(4) {
+  width: 12%;
+}
+.table-general th:nth-child(5) {
+  width: 10%;
+}
+.table-general th:nth-child(6) {
+  width: 22%;
+}
+.table-general th:nth-child(7) {
+  width: 10%;
+}
+.table-general th:nth-child(8) {
+  width: 11%;
+}
+
+.detail td p {
+  text-align: left;
+  background-color: #ffffff;
+  margin: 8px 0; /* Añade margen arriba y abajo para separarlos visualmente */
+  padding: 0;
+  line-height: 1.2;
+}
+
+.button-custom {
+  padding: 8px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin: 0;
+  background-color: #ffffff00;
+}
+
+.detail-title {
+  font-weight: bold; /* Esto pondrá el título en negrita */
+  margin-bottom: 5px; /* Ajusta como sea necesario para dar espacio debajo del título */
+  text-align: left;
+}
+
+/* Estilos existentes... */
+
+.detail-info {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.detail-info tr {
+  border-bottom: 1px solid #ccc; /* Agrega separación entre las filas de detalles */
+}
+
+.detail-info td {
+  padding: 4px 8px; /* Ajusta el relleno para cada celda de detalles */
+}
+
+.detail-info .value {
+  text-align: left;
+}
+
+.detail-title {
+  font-weight: bold;
+  text-align: left;
+  margin: 8px 0; /* Agrega espacio encima y debajo del título */
+}
+
+.containerFlex div p {
+  margin-bottom: 0;
+}
+
+.gridContainerPerfilBuscado {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 100%;
+  overflow-y: auto;
+}
+
+.gridContainerPerfil {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.gridContainerSalario {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  overflow-y: auto;
+}
+.gridContainerContacto {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  overflow-y: auto;
+}
+.gridContainerComentario {
+  display: grid;
+  width: 100%;
+  overflow-y: auto;
+  p {
+    white-space: normal;
+  }
+}
+.item {
+  border: none;
+  border-radius: 4px;
+}
+.titlePerfil {
+  font-size: 12px;
+  font-weight: 510;
+  color: black;
+}
+
+.itemGrid {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 20px;
+  margin-top: 10px;
+  p {
+    margin: 5px !important;
+  }
+}
+
+.headersClass {
+  th {
+    text-align: center;
+  }
+}
+
+.checklist {
+  z-index: 999;
+  position: absolute;
+  background: white;
+  width: 200px;
+  border: 1px solid #1a1d211a;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 3px;
+  display: block;
+  max-height: 250px;
+  overflow-x: scroll;
+  div {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+    padding: 5px 0;
+  }
+}
+
+.border-div {
+  border: 1px solid;
+  color: #efebeb;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.textarea-comentario {
+  width: 100%;
+  height: 230px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border: 2px solid #ccc;
+}
+
+.buttonUpLoad {
+  font-size: 10px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  margin: 1px;
+}
+
+#tablaRemuneraciones {
+  font-size: 12px;
+  width: 100%;
+}
