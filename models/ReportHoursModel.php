@@ -145,7 +145,6 @@ class ReportHoursModel
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-
     public function getServicioConsultor($userId)
     {
         // Preparar la sentencia SQL para seleccionar la información del equipo específico

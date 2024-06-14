@@ -1,29 +1,47 @@
 <?php
-class DatabaseConnection{
+class DatabaseConnection
+{
     private static $instance = null;
     private $connection;
 
     private $host = 'localhost'; // o la dirección del servidor de base de datos
     private $user = 'root'; // el usuario de la base de datos
     private $pass = ''; // la contraseña del usuario
-    private $name = 'digitalh_bd_principal1';
-    private function __construct() {
+    private $name = 'digitalh_bd_principal_2'; // Asegúrate que el nombre es correcto
+
+    private function __construct()
+    {
         $this->connection = new mysqli($this->host, $this->user, $this->pass, $this->name);
-        $this->connection->set_charset("utf8mb4");
         if ($this->connection->connect_error) {
-            die('Conexión fallida: ' . $this->connection->connect_error);
+            die("Connection failed: " . $this->connection->connect_error);
         }
     }
 
-    public static function getInstance() {
+    public function beginTransaction()
+    {
+        $this->connection->begin_transaction();
+    }
+
+    public static function getInstance()
+    {
         if (self::$instance === null) {
-            self::$instance = new DatabaseConnection();
+            self::$instance = new self();
         }
-        return self::$instance->connection;
+        return self::$instance;
     }
 
-    // No olvides cerrar la conexión cuando ya no sea necesaria
-    public function close() {
-        $this->connection->close();
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+    private function __clone()
+    {
+        // Evita la clonación del objeto
+    }
+
+    private function __wakeup()
+    {
+        // Evita la deserialización del objeto
     }
 }

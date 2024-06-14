@@ -1,9 +1,7 @@
 <?php
-session_start(); // Iniciar manejo de sesiones
-
 // Comprobar si existe una sesión de usuario
 if (!isset($_SESSION['usuario_id'])) {
-   header('Location: ./login.php');
+   header('Location: ./../login.php');
    exit();
 }
 ?>
@@ -13,67 +11,40 @@ if (!isset($_SESSION['usuario_id'])) {
 <head>
    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-   <meta name="description" content="Nifty is a responsive admin dashboard template based on Bootstrap 5 framework. There are a lot of useful components.">
-   <title>Dashboard 1 | Nifty - Admin Template</title>
-
+   <meta name="description" content="A user interface design pattern that enables untrained users to achieve a goal through a series of steps">
+   <title>Wizard | Nifty - Admin Template</title>
 
    <!-- STYLESHEETS -->
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
    <!-- Fonts [ OPTIONAL ] -->
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
 
-
    <!-- Bootstrap CSS [ REQUIRED ] -->
-   <link rel="stylesheet" href="../assets/css/styles.css">
-   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+   <link rel="stylesheet" href="./assets/css/styles.css">
+   <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
 
    <!-- Nifty CSS [ REQUIRED ] -->
-   <link rel="stylesheet" href="../assets/css/nifty.min.css">
+   <link rel="stylesheet" href="./assets/css/nifty.min.css">
 
    <!-- Nifty Demo Icons [ OPTIONAL ] -->
-   <link rel="stylesheet" href="../assets/css/demo-purpose/demo-icons.min.css">
+   <link rel="stylesheet" href="./assets/css/demo-purpose/demo-icons.min.css">
 
    <!-- Demo purpose CSS [ DEMO ] -->
-   <link rel="stylesheet" href="../assets/css/demo-purpose/demo-settings.min.css">
-
+   <link rel="stylesheet" href="./assets/css/demo-purpose/demo-settings.min.css">
 
    <!-- Favicons [ OPTIONAL ] -->
-   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-   <link rel="manifest" href="../site.webmanifest">
-
-
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   [ REQUIRED ]
-   You must include this category in your project.
-
-
-   [ OPTIONAL ]
-   This is an optional plugin. You may choose to include it in your project.
-
-
-   [ DEMO ]
-   Used for demonstration purposes only. This category should NOT be included in your project.
-
-
-   [ SAMPLE ]
-   Here's a sample script that explains how to initialize plugins and/or components: This category should NOT be included in your project.
-
-
-   Detailed information and more samples can be found in the documentation.
-
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
+   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+   <link rel="manifest" href="./site.webmanifest">
+   <!-- Zangdar Style [ OPTIONAL ] -->
+   <link rel="stylesheet" href="./assets/vendors/zangdar/zangdar.min.css">
 
 </head>
 
 <body class="out-quart">
-
 
    <!-- PAGE CONTAINER -->
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -85,18 +56,673 @@ if (!isset($_SESSION['usuario_id'])) {
          <div class="content__header content__boxed overlapping background-custom-digital">
             <div class="content__wrap">
 
-               <!-- Page title and information -->
-               <h1 class="page-title mb-2">Pagina Principal</h1>
-               <h2 class="h5">Welcome back to the Dashboard.</h2>
-               <!-- END : Page title and information -->
+
+               <!-- Breadcrumb -->
+               <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                     <li class="breadcrumb-item"><a href="../home.php">Home</a></li>
+                     <li class="breadcrumb-item active" aria-current="page">Wizard</li>
+                  </ol>
+               </nav>
+               <!-- END : Breadcrumb -->
+
+
+               <h1 class="page-title mb-0 mt-2"><?php echo $title ?></h1>
+
+               <p class="lead">
+                  Formulario para el registro de candidatos
+               </p>
             </div>
          </div>
 
+         <div class="content__boxed">
+            <div class="content__wrap">
+               <div class="card">
+                  <!-- Custom style form wizard -->
+                  <div class="d-md-flex align-content-stretch">
+                     <!-- <div class="d-none d-md-block vr"></div> -->
+
+                     <div class="card-body flex-fill">
+
+                        <!-- Step progress -->
+                        <nav id="_dm-customWizardSteps" class="nav nav-underline nav-component border-bottom justify-content-center flex-nowrap mb-4">
+                           <a onclick="activeModule(1)" class="nav-link px-4 active" data-step="datos">
+                              <i class="d-block demo-pli-male fs-2 mb-2"></i>
+                              <span>Datos personales</span>
+                           </a>
+
+                           <a href="#" class="nav-link px-4" data-step="contacto">
+                              <i class="d-block demo-pli-male fs-2 mb-2"></i>
+                              <span>Contacto</span>
+                           </a>
+
+                           <a href="#" class="nav-link px-4" data-step="perfiles">
+                              <i class="d-block demo-pli-male fs-2 mb-2"></i>
+                              <span>Experiencia & Perfil</span>
+                           </a>
+
+                           <a href="#" class="nav-link px-4" data-step="expectativa">
+                              <i class="d-block demo-pli-home fs-2 mb-2"></i>
+                              <span>Expectativa Salarial</span>
+                           </a>
+
+                           <a href="#" class="nav-link px-4" data-step="comentario">
+                              <i class="d-block demo-pli-home fs-2 mb-2"></i>
+                              <span>Comentarios</span>
+                           </a>
+
+                           <a href="#" class="nav-link px-4" data-step="finish">
+                              <i class="d-block demo-pli-medal-2 fs-2 mb-2"></i>
+                              <span>Finish</span>
+                           </a>
+                        </nav>
+                        <!-- END : Step progress -->
+
+                        <!-- Form sections -->
+                        <form id="_dm-customWizardForm" class="px-xl-3">
+
+                           <!-- Account section -->
+                           <section data-step="datos">
+                              <input id="IDcandidato" type="hidden" value="<?php echo $idCandidato ?>">
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="nombres" class="col-sm-4 col-xl-2 col-form-label">Nombres</label>
+                                       <div class="col-sm-8 col-xl-10">
+                                          <input id="nombres" type="text" value="<?php echo ($isEdit) ?  $infoCandidato['nombres_candidato'] : '' ?>" class="form-control">
+                                          <div id="errorNombres" class="text-danger"></div> 
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="apellidos" class="col-sm-4 col-xl-2 col-form-label">Apellidos</label>
+                                       <div class="col-sm-8 col-xl-10">
+                                          <input id="apellidos" type="email" value="<?php echo ($isEdit) ?  $infoCandidato['apellidos_candidato'] : '' ?>" class="form-control">
+                                          <div id="errorApellidos" class="text-danger"></div> 
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="direccion" class="col-sm-4 col-xl-2 col-form-label">Dirección</label>
+                                       <div class="col-sm-8 col-xl-10">
+                                          <input id="direccion" type="text" value="<?php echo ($isEdit) ?  $infoCandidato['direccion_candidato'] : '' ?>" class="form-control">
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="fechaNacimiento" class="col-sm-4 col-xl-4 col-form-label">Fecha de Nacimiento</label>
+                                       <div class="col-sm-8 col-xl-8">
+                                          <input id="fechaNacimiento" type="date" value="<?php echo ($isEdit) ?  $infoCandidato['comentario_fecha_nacimiento_candidato'] : '' ?>" class="form-control">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="n_ingles" class="col-sm-2 col-form-label">NIvel
+                                          ingles</label>
+                                       <div class="col-sm-10">
+                                          <select id="n_ingles" class="form-select">
+                                             <option value="">Seleccionar Opción</option>
+                                             <?php foreach ($ingles as $nivel) : ?>
+                                                <option value="<?= htmlspecialchars($nivel['id_ingles_conversacional']); ?>" <?php
+                                                                                                                              if ($isEdit && $infoCandidato['nivel_ingles_candidato'] == $nivel['id_ingles_conversacional']) {
+                                                                                                                                 echo 'selected';
+                                                                                                                              }
+                                                                                                                              ?>>
+                                                   <?= htmlspecialchars($nivel['descripcion_ingles_conversacional']); ?>
+                                                </option>
+                                             <?php endforeach; ?>
+                                          </select>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="n_inglesDH" class="col-sm-2 col-form-label">N.
+                                          ingles DH</label>
+                                       <div class="col-sm-10">
+                                          <select id="n_inglesDH" class="form-select">
+                                             <option value="none">Seleccionar Opción</option>
+                                             <?php foreach ($ingles as $nivel) : ?>
+                                                <option value="<?= htmlspecialchars($nivel['id_ingles_conversacional']); ?>" <?php
+                                                                                                                              if ($isEdit && $infoCandidato['nivel_ingles_conversacional_candidato'] == $nivel['id_ingles_conversacional']) {
+                                                                                                                                 echo 'selected';
+                                                                                                                              }
+                                                                                                                              ?>>
+                                                   <?= htmlspecialchars($nivel['descripcion_ingles_conversacional']); ?>
+                                                </option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="disponibilidad" class="col-sm-3 col-form-label">Disponibilidad</label>
+                                       <div class="col-sm-9">
+                                          <select id="disponibilidad" class="form-select">
+                                             <option value="none">Seleccionar Opción</option>
+                                             <?php foreach ($disponibilidades as $disponibilidad) : ?>
+                                                <option value="<?= htmlspecialchars($disponibilidad['id_disponibilidad']); ?>" <?php
+                                                                                                                                 if ($isEdit && $infoCandidato['id_disponibilidad'] == $disponibilidad['id_disponibilidad']) {
+                                                                                                                                    echo 'selected';
+                                                                                                                                 }
+                                                                                                                                 ?>>
+                                                   <?= htmlspecialchars($disponibilidad['descripcion_disponibilidad']); ?>
+                                                </option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="asistencia" class="col-sm-4 col-form-label">Asistencia Laboral</label>
+                                       <div class="col-sm-8">
+                                          <select id="asistencia" class="form-select">
+                                             <option value="none">Seleccionar Opción</option>
+                                             <?php foreach ($asistencias as $asistencia) : ?>
+                                                <option value="<?= htmlspecialchars($asistencia['id_asistencia_laboral']); ?>" <?php
+                                                                                                                                 if ($isEdit && $infoCandidato['id_asistencia_laboral'] == $asistencia['id_asistencia_laboral']) {
+                                                                                                                                    echo 'selected';
+                                                                                                                                 }
+                                                                                                                                 ?>>
+                                                   <?= htmlspecialchars($asistencia['descripcion_asistencia_laboral']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="fileToUpload" class="col-sm-4 col-xl-1 col-form-label">Curriculum
+                                    Vitae</label>
+                                 <div class="col-sm-8 col-xl-11" style="display: flex; align-items:center">
+                                    <button type="button" id="uploadBtn" onclick="onLoadFile()" class="buttonUpLoad">Cargar Archivo</button>
+                                    <span id="fileName" style="margin-left: 10px;"><?php echo ($isEdit) ?  $infoCandidato['nombre_archivo_candidato'] : '' ?></span>
+                                    <input type="file" name="fileToUpload" id="fileToUpload" style="display:none;" onchange="loadFile()">
+                                 </div>
+                              </div>
+
+                              <div class="d-flex">
+                                 <button id="step1" data-next class="btn btn-primary color-button-next ms-auto" onclick="saveStepOne()">Next</button>
+                              </div>
+
+                           </section>
+                           <!-- END : Account section -->
+
+                           <!-- Profile section -->
+                           <section data-step="contacto">
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="celularPrincipal" class="col-sm-3 col-form-label">Celular
+                                          Principal</label>
+                                       <div class="col-sm-9">
+                                          <input id="celularPrincipal" value="<?php echo ($isEdit) ?  $infoCandidato['celular_principal_candidato'] : '' ?>" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="celularSecundario" class="col-sm-3 p-xl-0 col-form-label">Celular
+                                          Secundario</label>
+                                       <div class="col-sm-9">
+                                          <input id="celularSecundario" value="<?php echo ($isEdit) ?  $infoCandidato['celular_secundario_candidato'] : '' ?>" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="telefonoFijo" class="col-sm-3 col-form-label">Telefono
+                                          Fijo</label>
+                                       <div class="col-sm-9">
+                                          <input id="telefonoFijo" value="<?php echo ($isEdit) ?  $infoCandidato['telefono_fijo_candidato'] : '' ?>" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <div class="col-xl-6 mb-3">
+                                    <div class="row align-items-center">
+                                       <label for="correoPrincipal" class="col-sm-3 col-form-label">Correo
+                                          Principal</label>
+                                       <div class="col-sm-9">
+                                          <input id="correoPrincipal" value="<?php echo ($isEdit) ?  $infoCandidato['correo_principal_candidato'] : '' ?>" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6 mb-3">
+                                    <div class="row align-items-center">
+                                       <label for="correoSecundario" class="col-sm-3 p-xl-0 col-form-label">Correo
+                                          Secundario</label>
+                                       <div class="col-sm-9">
+                                          <input id="correoSecundario" value="<?php echo ($isEdit) ?  $infoCandidato['correo_secundario_candidato'] : '' ?>" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="d-flex gap-2">
+                                 <button data-prev class="btn btn-light ms-auto">Previous</button>
+                                 <button data-next class="btn btn-primary color-button-next" onclick="saveStepTwo()">Next</button>
+                              </div>
+                           </section>
+                           <!-- END : Profile section -->
+
+                           <!-- Profile section -->
+                           <section data-step="perfiles">
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="inicioActividad" class="col-sm-5 col-form-label">Año Inicio de
+                                          Actividad Laboral</label>
+                                       <div class="col-sm-7">
+                                          <input id="inicioActividad" value="<?php echo ($isEdit) ?  $infoCandidato['anio_inicio_actividad_laboral_candidato'] : '' ?>" class="form-control" type="date">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="aniosExperiencia" class="col-sm-4 p-xl-0 col-form-label">Total Años
+                                          de Experiencia</label>
+                                       <div class="col-sm-8">
+                                          <input id="aniosExperiencia" value="<?php echo ($isEdit) ?  $infoCandidato['anio_experiencia_total_candidato'] : '' ?>" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3 border-div">
+                                 <label class="col-form-label">PERFIL BUSCADO</label>
+                                 <div class="row mb-3 titl">
+                                    <div class="col-xl-6">
+                                       <div class="row align-items-center">
+                                          <label for="perfilB1" class="col-sm-4 col-form-label">Perfil Buscado
+                                             1</label>
+                                          <div class="col-sm-8">
+                                             <select id="perfilB1" class="form-select">
+                                                <option value="none">Seleccionar Perfil</option>
+                                                <?php foreach ($perfilBuscado as $perfilB) : ?>
+                                                   <option value="<?= htmlspecialchars($perfilB['Id_perfil_solicitado']); ?>" <?php
+                                                                                                                              if ($isEdit && $infoPerfilesBuscados[0]['id_perfil_solicitado'] == $perfilB['Id_perfil_solicitado']) {
+                                                                                                                                 echo 'selected';
+                                                                                                                              }
+                                                                                                                              ?>>
+                                                      <?= htmlspecialchars($perfilB['descripcion_perfil_solicitado']); ?></option>
+                                                <?php endforeach; ?>
+                                             </select>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                       <div class="row align-items-center">
+                                          <label for="totalPB1" class="col-sm-4 p-xl-0 col-form-label">Total
+                                             Años
+                                             de Experiencia</label>
+                                          <div class="col-sm-8">
+                                             <input id="totalPB1" value="<?php echo ($isEdit) ? $infoPerfilesBuscados[0]['anio_experiencia_perfil_buscado'] : '' ?>" class="form-control" type="text">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="row mb-3">
+                                    <div class="col-xl-6">
+                                       <div class="row align-items-center">
+                                          <label for="perfilB2" class="col-sm-4 col-form-label">Perfil Buscado
+                                             2</label>
+                                          <div class="col-sm-8">
+                                             <select id="perfilB2" class="form-select">
+                                                <option value="none">Seleccionar Perfil</option>
+                                                <?php foreach ($perfilBuscado as $perfilB) : ?>
+                                                   <option value="<?= htmlspecialchars($perfilB['Id_perfil_solicitado']); ?>" <?php
+                                                                                                                              if ($isEdit && $infoPerfilesBuscados[1]['id_perfil_solicitado'] == $perfilB['Id_perfil_solicitado']) {
+                                                                                                                                 echo 'selected';
+                                                                                                                              }
+                                                                                                                              ?>><?= htmlspecialchars($perfilB['descripcion_perfil_solicitado']); ?></option>
+                                                <?php endforeach; ?>
+                                             </select>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                       <div class="row align-items-center">
+                                          <label for="totalPB2" class="col-sm-4 p-xl-0 col-form-label">Total
+                                             Años
+                                             de Experiencia</label>
+                                          <div class="col-sm-8">
+                                             <input id="totalPB2" value="<?php echo ($isEdit) ?  $infoPerfilesBuscados[1]['anio_experiencia_perfil_buscado'] : '' ?>" class="form-control" type="text">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="row mb-3">
+                                    <div class="col-xl-6">
+                                       <div class="row align-items-center">
+                                          <label for="perfilB3" class="col-sm-4 col-form-label">Perfil Buscado
+                                             3</label>
+                                          <div class="col-sm-8">
+                                             <select id="perfilB3" class="form-select">
+                                                <option value="none">Seleccionar Perfil</option>
+                                                <?php foreach ($perfilBuscado as $perfilB) : ?>
+                                                   <option value="<?= htmlspecialchars($perfilB['Id_perfil_solicitado']); ?>" <?php
+                                                                                                                              if ($isEdit && $infoPerfilesBuscados[2]['id_perfil_solicitado'] == $perfilB['Id_perfil_solicitado']) {
+                                                                                                                                 echo 'selected';
+                                                                                                                              }
+                                                                                                                              ?>><?= htmlspecialchars($perfilB['descripcion_perfil_solicitado']); ?></option>
+                                                <?php endforeach; ?>
+                                             </select>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                       <div class="row align-items-center">
+                                          <label for="totalPB3" class="col-sm-4 p-xl-0 col-form-label">Total
+                                             Años
+                                             de Experiencia</label>
+                                          <div class="col-sm-8">
+                                             <input id="totalPB3" value="<?php echo ($isEdit) ?  $infoPerfilesBuscados[2]['anio_experiencia_perfil_buscado'] : '' ?>" class="form-control" type="text">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <div class="col-xl-6 border-div">
+                                    <label class="col-form-label">PERFIL & EXPERIENCIA</label>
+                                    <div class="row align-items-center mb-3">
+                                       <label for="perfilCandidato1" class="col-sm-4 col-form-label">Perfil &
+                                          Experiencia 1</label>
+                                       <div class="col-sm-8">
+                                          <select id="perfilCandidato1" class="form-select">
+                                             <option value="none">Seleccionar Perfil</option>
+                                             <?php foreach ($perfilCandidato as $perfilC) : ?>
+                                                <option value="<?= htmlspecialchars($perfilC['id_perfil']); ?>" <?php
+                                                                                                                  if ($isEdit && $infoCandidato['perfil_experiencia1_candidato'] == $perfilC['id_perfil']) {
+                                                                                                                     echo 'selected';
+                                                                                                                  }
+                                                                                                                  ?>><?= htmlspecialchars($perfilC['descripcion_perfil']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="row align-items-center mb-3">
+                                       <label for="perfilCandidato2" class="col-sm-4 col-form-label">Perfil &
+                                          Experiencia 2</label>
+                                       <div class="col-sm-8">
+                                          <select id="perfilCandidato2" class="form-select">
+                                             <option value="none">Seleccionar Perfil</option>
+                                             <?php foreach ($perfilCandidato as $perfilC) : ?>
+                                                <option value="<?= htmlspecialchars($perfilC['id_perfil']); ?>" <?php
+                                                                                                                  if ($isEdit && $infoCandidato['perfil_experiencia2_candidato'] == $perfilC['id_perfil']) {
+                                                                                                                     echo 'selected';
+                                                                                                                  }
+                                                                                                                  ?>><?= htmlspecialchars($perfilC['descripcion_perfil']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="row align-items-center mb-3">
+                                       <label for="perfilCandidato3" class="col-sm-4 col-form-label">Perfil &
+                                          Experiencia 3</label>
+                                       <div class="col-sm-8">
+                                          <select id="perfilCandidato3" class="form-select">
+                                             <option value="none">Seleccionar Perfil</option>
+                                             <?php foreach ($perfilCandidato as $perfilC) : ?>
+                                                <option value="<?= htmlspecialchars($perfilC['id_perfil']); ?>" <?php
+                                                                                                                  if ($isEdit && $infoCandidato['perfil_experiencia3_candidato'] == $perfilC['id_perfil']) {
+                                                                                                                     echo 'selected';
+                                                                                                                  }
+                                                                                                                  ?>><?= htmlspecialchars($perfilC['descripcion_perfil']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6 border-div">
+                                    <label class="col-form-label">PERFIL & EXPERIENCIA DH</label>
+                                    <div class="row align-items-center mb-3">
+                                       <label for="_dm-wRegFirstName" class="col-sm-4 col-form-label">Perfil &
+                                          Experiencia DH 1</label>
+                                       <div class="col-sm-8">
+                                          <select id="perfilCandidatoDH1" class="form-select">
+                                             <option value="none">Seleccionar Perfil</option>
+                                             <?php foreach ($perfilCandidato as $perfilC) : ?>
+                                                <option value="<?= htmlspecialchars($perfilC['id_perfil']); ?>" <?php
+                                                                                                                  if ($isEdit && $infoCandidato['DH_perfil_experiencia1_candidato'] == $perfilC['id_perfil']) {
+                                                                                                                     echo 'selected';
+                                                                                                                  }
+                                                                                                                  ?>><?= htmlspecialchars($perfilC['descripcion_perfil']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="row align-items-center mb-3">
+                                       <label for="_dm-wRegFirstName" class="col-sm-4 col-form-label">Perfil &
+                                          Experiencia DH 2</label>
+                                       <div class="col-sm-8">
+                                          <select id="perfilCandidatoDH2" class="form-select">
+                                             <option value="none">Seleccionar Perfil</option>
+                                             <?php foreach ($perfilCandidato as $perfilC) : ?>
+                                                <option value="<?= htmlspecialchars($perfilC['id_perfil']); ?>" <?php
+                                                                                                                  if ($isEdit && $infoCandidato['DH_perfil_experiencia2_candidato'] == $perfilC['id_perfil']) {
+                                                                                                                     echo 'selected';
+                                                                                                                  }
+                                                                                                                  ?>><?= htmlspecialchars($perfilC['descripcion_perfil']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="row align-items-center mb-3">
+                                       <label for="_dm-wRegFirstName" class="col-sm-4 col-form-label">Perfil &
+                                          Experiencia DH 3</label>
+                                       <div class="col-sm-8">
+                                          <select id="perfilCandidatoDH3" class="form-select">
+                                             <option value="none">Seleccionar Perfil</option>
+                                             <?php foreach ($perfilCandidato as $perfilC) : ?>
+                                                <option value="<?= htmlspecialchars($perfilC['id_perfil']); ?>" <?php
+                                                                                                                  if ($isEdit && $infoCandidato['DH_perfil_experiencia3_candidato'] == $perfilC['id_perfil']) {
+                                                                                                                     echo 'selected';
+                                                                                                                  }
+                                                                                                                  ?>><?= htmlspecialchars($perfilC['descripcion_perfil']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="d-flex gap-2">
+                                 <button data-prev class="btn btn-light ms-auto">Previous</button>
+                                 <button data-next class="btn btn-primary color-button-next" onclick="saveStepThree()">Next</button>
+                              </div>
+                           </section>
+                           <!-- END : Profile section -->
+
+                           <!-- Profile section -->
+                           <section data-step="expectativa">
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="_dm-wRegPassword" class="col-sm-4 col-form-label">Tipo de remuneración</label>
+                                       <div class="col-sm-8">
+                                          <select id="tipoRemuneracion" class="form-select">
+                                             <option value="none">Seleccionar Opción</option>
+                                             <?php foreach ($tipoRemuneracion as $tipoR) : ?>
+                                                <option value="<?= htmlspecialchars($tipoR['id_tipo_remuneracion']); ?>" name="<?= htmlspecialchars($tipoR['descripcion_tipo_remuneracion']); ?>"><?= htmlspecialchars($tipoR['descripcion_tipo_remuneracion']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="_dm-wRegPassword" class="col-sm-3 col-form-label">Tipo de Moneda</label>
+                                       <div class="col-sm-9">
+                                          <select id="tipoMoneda" class="form-select">
+                                             <option value="none">Seleccionar Opción</option>
+                                             <?php foreach ($tipoMoneda as $tipoM) : ?>
+                                                <option value="<?= htmlspecialchars($tipoM['id_tipo_moneda']); ?>"><?= htmlspecialchars($tipoM['simbolo_tipo_moneda']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="limiteInferior" class="col-sm-4 col-form-label">Limite Inferior</label>
+                                       <div class="col-sm-4">
+                                          <input id="limiteInferior" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="limiteSuperior" class="col-sm-3 col-form-label">Limite Superior</label>
+                                       <div class="col-sm-4">
+                                          <input id="limiteSuperior" class="form-control" type="text">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-xl-6 mt-2 mb-2">
+                                 <div class="row align-items-center col-xl-6">
+                                    <div class="col-sm-7">
+                                       <button type="button" class="btn btn-primary color-button-next" onclick="saveStepFour();">Agregar</button>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row mb-3">
+
+                                 <table id="tablaRemuneraciones">
+                                    <thead>
+                                       <tr>
+                                          <th>id</th>
+                                          <th>Tipo de Remuneración</th>
+                                          <th>Tipo de Moneda</th>
+                                          <th>Límite Inferior</th>
+                                          <th>Límite Superior</th>
+                                          <th style="text-align: center;">Acciones</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <?php if ($isEdit && !empty($infoRemuneraciones)) : ?>
+                                          <?php foreach ($infoRemuneraciones as $remuneracion) : ?>
+                                             <tr>
+                                             
+                                                <td><?php echo htmlspecialchars($remuneracion['id_tipo_remuneracion']); ?></td>
+                                                <td><?php echo htmlspecialchars($remuneracion['descripcion_tipo_remuneracion']); ?></td>
+                                                <td><?php echo htmlspecialchars($remuneracion['simbolo_tipo_moneda']); ?></td>
+                                                <td><?php echo htmlspecialchars($remuneracion['limite_inferior_remuneracion_candidato']); ?></td>
+                                                <td><?php echo htmlspecialchars($remuneracion['limite_superior_remuneracion_candidato']); ?></td>
+                                                <td style="text-align: center;">
+                                                 
+                                                   <button class="buttonUpLoad" type="button" onclick="editarRemuneracion(<?php echo $remuneracion['id']; ?>)">Editar</button>
+                                                   <button class="buttonUpLoad" type="button" onclick="eliminarRemuneracion(<?php echo $remuneracion['id']; ?>)">Eliminar</button>
+                                                </td>
+                                                <input id="id_remuneracion" type="hidden" value="<?php echo $remuneracion['id']; ?>">
+                                                <input id="id_moneda" type="hidden" value="<?php echo $remuneracion['id_tipo_moneda']; ?>">
+                                             </tr>
+                                          <?php endforeach; ?>
+                                       <?php endif; ?>
+                                    </tbody>
+                                 </table>
+                              </div>
+                              <div class="row mb-3">
+                                 <div class="d-flex gap-2">
+                                    <button data-prev class="btn btn-light ms-auto">Previous</button>
+                                    <button data-next class="btn btn-primary color-button-next">Next</button>
+                                 </div>
+                                 <script src="./assets/pages/candidato.js"></script>
+                              </div>
+                           </section>
+                           <!-- END : Profile section -->
+
+                           <!-- Address section -->
+                           <section data-step="comentario">
+                              <div class="row mb-3">
+                                 <div class="col-xl-6">
+                                    <div class="row align-items-center">
+                                       <label for="reclutador" class="col-sm-4 col-form-label">Reclutador</label>
+                                       <div class="col-sm-8">
+                                          <select id="reclutador" class="form-select">
+                                             <option value="none">Seleccionar Opción</option>
+                                             <?php foreach ($reclutadores as $reclutador) : ?>
+                                                <option value="<?= htmlspecialchars($reclutador['id_reclutador']); ?>" <?php
+                                                                                                                        if ($isEdit && $infoCandidato['id_reclutador'] == $reclutador['id_reclutador']) {
+                                                                                                                           echo 'selected';
+                                                                                                                        }
+                                                                                                                        ?>><?= htmlspecialchars($reclutador['descripcion']); ?></option>
+                                             <?php endforeach; ?>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="_dm-wRegUsername" class="col-sm-1 col-xl-2 col-form-label">Comentario del
+                                    Reclutador</label>
+                                 <div class="col-sm-11 col-xl-10">
+                                    <textarea id="descripcion" name="descripcion" rows="10" cols="100" class="textarea-comentario" placeholder="Escribe el comentario aqui..."><?php echo ($isEdit) ?  $infoCandidato['comentario_reclutador_candidato'] : '' ?></textarea>
+                                 </div>
+                              </div>
+
+                              <div class="d-flex gap-2">
+                                 <button data-prev class="btn btn-light ms-auto">Previous</button>
+                                 <button data-next class="btn btn-success" onclick="enviarFormulario()">Submit</button>
+
+                              </div>
+                           </section>
+                           <!-- END : Address section -->
+
+                           <!-- Submit state -->
+                           <section data-step="finish" class="text-center">
+                              <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                 <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                 <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                              </svg>
+                              <p class="h3">El candidato fue registrado exitosamente</p>
+                           </section>
+                           <!-- END : Submit state -->
+
+                        </form>
+                        <!-- END : Form sections -->
+                     </div>
+                  </div>
+                  <!-- END : Custom style form wizard -->
+               </div>
+            </div>
+         </div>
       </section>
 
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <!-- END - CONTENTS -->
-
 
       <!-- HEADER -->
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -108,15 +734,9 @@ if (!isset($_SESSION['usuario_id'])) {
                <div class="brand-wrap">
 
                   <!-- Brand logo -->
-                  <a href="index.html" class="brand-img stretched-link" style="display: flex;">
+                  <a href="index.html" class="brand-img stretched-link">
                      <img src="https://digitalhublatam.com/wp-content/uploads/2023/03/logo-digitalhub.png.webp" alt="Nifty Logo" class="Nifty logo" style="width: 75%;height:auto;filter: brightness(0) invert(1);">
                   </a>
-
-
-                  <!-- Brand title -->
-
-
-
                   <!-- You can also use IMG or SVG instead of a text element. -->
                   <!--
             <div class="brand-title">
@@ -128,12 +748,10 @@ if (!isset($_SESSION['usuario_id'])) {
             </div>
             <!-- End - Brand -->
 
-
             <div class="header__content">
 
                <!-- Content Header - Left Side: -->
                <div class="header__content-start">
-
 
                   <!-- Navigation Toggler -->
                   <button type="button" class="nav-toggler header__btn btn btn-icon btn-sm" aria-label="Nav Toggler">
@@ -149,15 +767,12 @@ if (!isset($_SESSION['usuario_id'])) {
                      <label for="header-search-input" class="header__btn d-md-none btn btn-icon rounded-pill shadow-none border-0 btn-sm" type="button">
                         <i class="demo-psi-magnifi-glass"></i>
                      </label>
-
                   </div>
                </div>
                <!-- End - Content Header - Left Side -->
 
-
                <!-- Content Header - Right Side: -->
                <div class="header__content-end">
-
 
                   <!-- Mega Dropdown -->
                   <div class="dropdown">
@@ -189,11 +804,8 @@ if (!isset($_SESSION['usuario_id'])) {
                                  <a href="#" class="list-group-item list-group-item-action">Invoices</a>
                                  <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Disabled Item</a>
                               </div>
-
-
                            </div>
                            <div class="col-md-3">
-
 
                               <!-- Mailbox list group -->
                               <div class="list-group list-group-borderless mb-3">
@@ -211,7 +823,6 @@ if (!isset($_SESSION['usuario_id'])) {
                                  <a href="#" class="list-group-item list-group-item-action">Template</a>
                               </div>
 
-
                               <!-- News -->
                               <div class="list-group list-group-borderless bg-warning-subtle py-2">
                                  <div class="list-group-item d-flex align-items-center border-bottom text-warning-emphasis">
@@ -226,11 +837,8 @@ if (!isset($_SESSION['usuario_id'])) {
                                  </small>
                               </div>
 
-
                            </div>
                            <div class="col-md-3">
-
-
                               <!-- List Group -->
                               <div class="list-group list-group-borderless">
                                  <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
@@ -280,8 +888,6 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
                                  </div>
                               </div>
-
-
                            </div>
                            <div class="col-md-3">
 
@@ -303,11 +909,115 @@ if (!isset($_SESSION['usuario_id'])) {
                                  </div>
                                  <a href="#" class="btn btn-primary">Browse Gallery</a>
                               </div>
+
                            </div>
                         </div>
                      </div>
                   </div>
                   <!-- End - Mega Dropdown -->
+
+
+                  <!-- Notification Dropdown -->
+                  <div class="dropdown">
+
+                     <!-- Toggler -->
+                     <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="Notification dropdown" aria-expanded="false">
+                        <span class="d-block position-relative">
+                           <i class="demo-psi-bell"></i>
+
+                           <span class="badge badge-super rounded-pill bg-danger p-1">
+                              <span class="visually-hidden">unread messages</span>
+                           </span>
+
+                           <!-- Set custom notification count -->
+                           <!--
+                     <span class="badge badge-super rounded-pill bg-danger p-1">
+                     	 19<span class="visually-hidden">unread messages</span>
+                     </span>
+                     -->
+                        </span>
+                     </button>
+
+                     <!-- Notification dropdown menu -->
+                     <div class="dropdown-menu dropdown-menu-end w-md-300px">
+                        <div class="border-bottom px-3 py-2 mb-3">
+                           <h5>Notifications</h5>
+                        </div>
+
+                        <div class="list-group list-group-borderless">
+                           <!-- List item -->
+                           <div class="list-group-item list-group-item-action d-flex align-items-center mb-3">
+                              <div class="flex-shrink-0 me-3">
+                                 <i class="demo-psi-data-settings text-danger fs-2"></i>
+                              </div>
+                              <div class="flex-grow-1">
+                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Your
+                                    storage is full</a>
+                                 <small class="text-body-secondary">Local storage is nearly full.</small>
+                              </div>
+                           </div>
+
+                           <!-- List item -->
+                           <div class="list-group-item list-group-item-action d-flex align-items-center mb-3">
+                              <div class="flex-shrink-0 me-3">
+                                 <i class="demo-psi-pen-5 text-info fs-2"></i>
+                              </div>
+                              <div class="flex-grow-1">
+                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Writing a New
+                                    Article</a>
+                                 <small class="text-body-secondary">Wrote a news article for the John Mike</small>
+                              </div>
+                           </div>
+
+                           <!-- List item -->
+                           <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
+                              <div class="flex-shrink-0 me-3">
+                                 <i class="demo-psi-speech-bubble-3 text-success fs-2"></i>
+                              </div>
+                              <div class="flex-grow-1">
+                                 <div class="d-flex justify-content-between align-items-start">
+                                    <a href="#" class="h6 fw-normal mb-0 stretched-link text-decoration-none">Comment
+                                       sorting</a>
+                                    <span class="badge bg-info rounded ms-auto">NEW</span>
+                                 </div>
+                                 <small class="text-body-secondary">You have 1,256 unsorted comments.</small>
+                              </div>
+                           </div>
+
+                           <!-- List item -->
+                           <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
+                              <div class="flex-shrink-0 me-3">
+                                 <img class="img-xs rounded-circle" src="./assets/img/profile-photos/7.png" alt="Profile Picture" loading="lazy">
+                              </div>
+                              <div class="flex-grow-1">
+                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Lucy
+                                    Sent you a message</a>
+                                 <small class="text-body-secondary">30 minutes ago</small>
+                              </div>
+                           </div>
+
+                           <!-- List item -->
+                           <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
+                              <div class="flex-shrink-0 me-3">
+                                 <img class="img-xs rounded-circle" src="./assets/img/profile-photos/3.png" alt="Profile Picture" loading="lazy">
+                              </div>
+                              <div class="flex-grow-1">
+                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Jackson Sent
+                                    you a message</a>
+                                 <small class="text-body-secondary">1 hours ago</small>
+                              </div>
+                           </div>
+
+                           <div class="text-center mb-2">
+                              <a href="#" class="btn-link text-primary icon-link icon-link-hover">
+                                 Show all Notifications
+                                 <i class="bi demo-psi-arrow-out-right"></i>
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- End - Notification dropdown -->
 
                   <!-- User dropdown -->
                   <div class="dropdown">
@@ -316,7 +1026,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="User dropdown" aria-expanded="false">
                         <i class="demo-psi-male"></i>
                      </button>
-
 
                      <!-- User dropdown menu -->
                      <div class="dropdown-menu dropdown-menu-end w-md-450px">
@@ -356,7 +1065,6 @@ if (!isset($_SESSION['usuario_id'])) {
                                  </div>
                               </div>
 
-
                            </div>
                            <div class="col-md-5">
 
@@ -380,15 +1088,11 @@ if (!isset($_SESSION['usuario_id'])) {
                                     <i class="demo-pli-unlock fs-5 me-2"></i> Logout
                                  </a>
                               </div>
-
-
                            </div>
                         </div>
-
                      </div>
                   </div>
                   <!-- End - User dropdown -->
-
 
                   <div class="vr mx-1 d-none d-md-block"></div>
 
@@ -406,15 +1110,12 @@ if (!isset($_SESSION['usuario_id'])) {
                   <button class="sidebar-toggler header__btn btn btn-icon btn-sm" type="button" aria-label="Sidebar button">
                      <i class="demo-psi-dot-vertical"></i>
                   </button>
-
-
                </div>
             </div>
          </div>
       </header>
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <!-- END - HEADER -->
-
 
       <!-- MAIN NAVIGATION -->
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -427,13 +1128,10 @@ if (!isset($_SESSION['usuario_id'])) {
 
                <!-- Profile Widget -->
                <div id="_dm-mainnavProfile" class="mainnav__widget my-3 hv-outline-parent">
-
                   <!-- Profile picture  -->
                   <div class="mininav-toggle text-center py-2">
-                     <img class="mainnav__avatar img-md rounded-circle hv-oc" src="../assets/img/profile-photos/1.png" alt="Profile Picture">
+                     <img class="mainnav__avatar img-md rounded-circle hv-oc" src="./assets/img/profile-photos/1.png" alt="Profile Picture">
                   </div>
-
-
                   <div class="mininav-content collapse d-mn-max">
                      <span data-popper-arrow class="arrow"></span>
                      <div class="d-grid">
@@ -445,7 +1143,6 @@ if (!isset($_SESSION['usuario_id'])) {
                            </span>
                            <small class="text-body-secondary">Administrator</small>
                         </button>
-
 
                         <!-- Collapsed user menu -->
                         <div id="usernav" class="nav flex-column collapse">
@@ -470,14 +1167,10 @@ if (!isset($_SESSION['usuario_id'])) {
                               <span class="ms-1">Logout</span>
                            </a>
                         </div>
-
-
                      </div>
                   </div>
-
                </div>
                <!-- End - Profile widget -->
-
 
                <!-- Navigation Category -->
                <div class="mainnav__categoriy py-3">
@@ -488,7 +1181,7 @@ if (!isset($_SESSION['usuario_id'])) {
                      <li class="nav-item has-sub">
 
 
-                        <a href="#" class="mininav-toggle nav-link active color-butoon-dashboard"><i class="demo-pli-home fs-5 me-2"></i>
+                        <a href="#" class="mininav-toggle nav-link collapsed"><i class="demo-pli-home fs-5 me-2"></i>
                            <span class="nav-label ms-1">Dashboard</span>
                         </a>
 
@@ -496,21 +1189,19 @@ if (!isset($_SESSION['usuario_id'])) {
                         <ul class="mininav-content nav collapse">
                            <li data-popper-arrow class="arrow"></li>
                            <li class="nav-item">
-                              <a href="../views/home.php" class="nav-link active">Dashboard 1</a>
+                              <a href="../../views/home.php" class="nav-link">Dashboard 1</a>
                            </li>
-                           <!--<li class="nav-item">
-                              <a href="./dashboard-2.html" class="nav-link">Dashboard 2</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./dashboard-3.html" class="nav-link">Dashboard 3</a>
-                           </li>-->
-
                         </ul>
                         <!-- END : Dashboard submenu list -->
 
                      </li>
                      <!-- END : Link with submenu -->
 
+                     <!-- Link with submenu -->
+                     <li class="nav-item has-sub">
+
+                     </li>
+                     <!-- END : Link with submenu -->
                   </ul>
                </div>
                <!-- END : Navigation Category -->
@@ -554,10 +1245,11 @@ if (!isset($_SESSION['usuario_id'])) {
                                     <ul class="mininav-content nav collapse">
                                        <li data-popper-arrow class="arrow"></li>
                                        <li class="nav-item">
-                                          <a href="../candidatos-registro.php" class="nav-link">Crear Candidato</a>
+                                          <a href="candidatos-registro.php" class="nav-link">Crear
+                                             Candidato</a>
                                        </li>
                                        <li class="nav-item">
-                                          <a href="../candidatos.php" class="nav-link">Resumen de Candidatos</a>
+                                          <a href="candidatos.php" class="nav-link">Resumen de Candidatos</a>
                                        </li>
                                     </ul>
                                     <!-- Fin del nuevo tercer nivel de submenú -->
@@ -566,10 +1258,8 @@ if (!isset($_SESSION['usuario_id'])) {
                            </li>
                         </ul>
                         <!-- END : Menu Levels submenu list -->
-
                      </li>
                      <!-- END : Link with submenu -->
-
                   </ul>
                </div>
                <!-- END : More Category -->
@@ -582,15 +1272,15 @@ if (!isset($_SESSION['usuario_id'])) {
             <div class="mainnav__bottom-content border-top pb-2">
                <ul id="mainnav" class="mainnav__menu nav flex-column">
                   <li class="nav-item">
-                     <a href="./../logout.php" class="nav-link mininav-toggle collapsed" aria-expanded="false">
+                     <a href="./logout.php" class="nav-link mininav-toggle collapsed" aria-expanded="false">
                         <i class="demo-pli-unlock fs-5 me-2"></i>
                         <span class="nav-label ms-1">Logout</span>
                      </a>
                   </li>
                </ul>
             </div>
-
             <!-- End - Bottom navigation menu -->
+
 
          </div>
       </nav>
@@ -873,16 +1563,6 @@ if (!isset($_SESSION['usuario_id'])) {
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <!-- END - PAGE CONTAINER -->
 
-
-   <!-- SCROLL TO TOP BUTTON -->
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-   <div class="scroll-container">
-      <a href="#root" class="scroll-page ratio ratio-1x1" aria-label="Scroll button"></a>
-   </div>
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-   <!-- END - SCROLL TO TOP BUTTON -->
-
-
    <!-- BOXED LAYOUT : BACKGROUND IMAGES CONTENT [ DEMO ] -->
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <div id="_dm-boxedBgContent" class="_dm-boxbg offcanvas offcanvas-bottom" data-bs-scroll="true" tabindex="-1">
@@ -1071,9 +1751,9 @@ if (!isset($_SESSION['usuario_id'])) {
                </div>
             </div>
             <!-- End - Abstract Background Images -->
+
          </div>
          <!-- End - Collection Of Images -->
-
       </div>
    </div>
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -1087,13 +1767,11 @@ if (!isset($_SESSION['usuario_id'])) {
          <i class="demo-psi-gear fs-1"></i>
       </button>
 
-
       <div class="offcanvas-body py-0">
          <div class="_dm-settings-container__content row">
             <div class="col-lg-3 p-4">
 
                <h4 class="fw-bold pb-3 mb-2">Layouts</h4>
-
 
                <!-- OPTION : Centered Layout -->
                <h6 class="mb-2 pb-1">Layouts</h6>
@@ -1104,7 +1782,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Boxed layout -->
                <div class="d-flex align-items-center pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-boxedLayoutRadio">Boxed Layout</label>
@@ -1112,7 +1789,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-boxedLayoutRadio" class="form-check-input ms-0" type="radio" name="settingLayouts" autocomplete="off">
                   </div>
                </div>
-
 
                <!-- OPTION : Boxed layout with background images -->
                <div id="_dm-boxedBgOption" class="opacity-50 d-flex align-items-center pt-1 mb-2">
@@ -1123,7 +1799,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </button>
                </div>
 
-
                <!-- OPTION : Centered Layout -->
                <div class="d-flex align-items-start pt-1 pb-3 mb-2">
                   <label class="form-check-label flex-fill text-nowrap" for="_dm-centeredLayoutRadio">Centered
@@ -1132,7 +1807,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-centeredLayoutRadio" class="form-check-input ms-0" type="radio" name="settingLayouts" autocomplete="off">
                   </div>
                </div>
-
 
                <!-- OPTION : Transition timing -->
                <h6 class="mt-4 mb-2 py-1">Transitions</h6>
@@ -1149,7 +1823,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </select>
                </div>
 
-
                <!-- OPTION : Sticky Header -->
                <h6 class="mt-4 mb-2 py-1">Header</h6>
                <div class="d-flex align-items-center pt-1 pb-3 mb-2">
@@ -1158,7 +1831,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-stickyHeaderCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off">
                   </div>
                </div>
-
 
                <!-- OPTION : Additional Offcanvas -->
                <h6 class="mt-4 mb-2 py-1">Additional Offcanvas</h6>
@@ -1170,12 +1842,10 @@ if (!isset($_SESSION['usuario_id'])) {
                   <button type="button" class="_dm-offcanvasBtn btn btn-sm btn-primary" value="offcanvas-start">Left</button>
                </div>
 
-
             </div>
             <div class="col-lg-3 p-4 bg-body">
 
                <h4 class="fw-bold pb-3 mb-2">Sidebars</h4>
-
 
                <!-- OPTION : Sticky Navigation -->
                <h6 class="mb-2 pb-1">Navigation</h6>
@@ -1186,7 +1856,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Navigation Profile Widget -->
                <div class="d-flex align-items-center pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-profileWidgetCheckbox">Widget Profile</label>
@@ -1194,7 +1863,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-profileWidgetCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off" checked>
                   </div>
                </div>
-
 
                <!-- OPTION : Mini navigation mode -->
                <div class="d-flex align-items-center pt-3 mb-2">
@@ -1204,7 +1872,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Maxi navigation mode -->
                <div class="d-flex align-items-center pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-maxiNavRadio">Max / Expanded Mode</label>
@@ -1212,7 +1879,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-maxiNavRadio" class="form-check-input ms-0" type="radio" name="navigation-mode" autocomplete="off" checked>
                   </div>
                </div>
-
 
                <!-- OPTION : Push navigation mode -->
                <div class="d-flex align-items-center pt-1 mb-2">
@@ -1222,7 +1888,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Slide on top navigation mode -->
                <div class="d-flex align-items-center pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-slideNavRadio">Slide on top (default)</label>
@@ -1230,7 +1895,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-slideNavRadio" class="form-check-input ms-0" type="radio" name="navigation-mode" autocomplete="off">
                   </div>
                </div>
-
 
                <!-- OPTION : Slide on top navigation mode -->
                <div class="d-flex align-items-center pt-1 mb-2">
@@ -1249,9 +1913,7 @@ if (!isset($_SESSION['usuario_id'])) {
                   </button>
                </div>
 
-
                <h6 class="mt-3 mb-2 py-1">Sidebar</h6>
-
 
                <!-- OPTION : Disable sidebar backdrop -->
                <div class="d-flex align-items-center pt-1 mb-2">
@@ -1261,7 +1923,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Static position -->
                <div class="d-flex align-items-center pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-staticSidebarCheckbox">Static position</label>
@@ -1269,7 +1930,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-staticSidebarCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off">
                   </div>
                </div>
-
 
                <!-- OPTION : Stuck sidebar -->
                <div class="d-flex align-items-center pt-1 mb-2">
@@ -1279,7 +1939,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Unite Sidebar -->
                <div class="d-flex align-items-center pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-uniteSidebarCheckbox">Unite Sidebar</label>
@@ -1288,7 +1947,6 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <!-- OPTION : Pinned Sidebar -->
                <div class="d-flex align-items-start pt-1 mb-2">
                   <label class="form-check-label flex-fill" for="_dm-pinnedSidebarCheckbox">Pinned Sidebar</label>
@@ -1296,7 +1954,6 @@ if (!isset($_SESSION['usuario_id'])) {
                      <input id="_dm-pinnedSidebarCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off">
                   </div>
                </div>
-
             </div>
             <div class="col-lg-6 p-4">
                <h4 class="fw-bold pb-3 mb-2">Colors</h4>
@@ -1334,15 +1991,12 @@ if (!isset($_SESSION['usuario_id'])) {
                   </div>
                </div>
 
-
                <div id="dm_colorModeContainer">
                   <div class="row text-center mb-2">
-
                      <!-- Expanded Header -->
                      <div class="col-md-4">
                         <h6 class="m-0">Expanded Header</h6>
                         <div class="_dm-colorShcemesMode">
-
                            <!-- Scheme Button -->
                            <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none" data-color-mode="tm--expanded-hd">
                               <img src="./assets/img/color-schemes/expanded-header.png" alt="color scheme illusttration" loading="lazy">
@@ -1350,84 +2004,60 @@ if (!isset($_SESSION['usuario_id'])) {
 
                         </div>
                      </div>
-
-
                      <!-- Fair Header -->
                      <div class="col-md-4">
                         <h6 class="m-0">Fair Header</h6>
                         <div class="_dm-colorShcemesMode">
-
                            <!-- Scheme Button -->
                            <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none" data-color-mode="tm--fair-hd">
                               <img src="./assets/img/color-schemes/fair-header.png" alt="color scheme illusttration" loading="lazy">
                            </button>
-
                         </div>
                      </div>
 
-
                      <div class="col-md-4">
                         <h6 class="m-0">Full Header</h6>
-
                         <div class="_dm-colorShcemesMode">
-
                            <!-- Scheme Button -->
                            <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none" data-color-mode="tm--full-hd">
                               <img src="./assets/img/color-schemes/full-header.png" alt="color scheme illusttration" loading="lazy">
                            </button>
-
                         </div>
                      </div>
                   </div>
-
 
                   <div class="row text-center mb-2">
                      <div class="col-md-4">
                         <h6 class="m-0">Primary Nav</h6>
-
                         <div class="_dm-colorShcemesMode">
-
                            <!-- Scheme Button -->
                            <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none" data-color-mode="tm--primary-mn">
                               <img src="./assets/img/color-schemes/navigation.png" alt="color scheme illusttration" loading="lazy">
                            </button>
-
                         </div>
                      </div>
-
                      <div class="col-md-4">
                         <h6 class="m-0">Brand</h6>
-
                         <div class="_dm-colorShcemesMode">
-
                            <!-- Scheme Button -->
                            <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none" data-color-mode="tm--primary-brand">
                               <img src="./assets/img/color-schemes/brand.png" alt="color scheme illusttration" loading="lazy">
                            </button>
-
                         </div>
                      </div>
-
                      <div class="col-md-4">
                         <h6 class="m-0">Tall Header</h6>
                         <div class="_dm-colorShcemesMode">
-
                            <!-- Scheme Button -->
                            <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none" data-color-mode="tm--tall-hd">
                               <img src="./assets/img/color-schemes/tall-header.png" alt="color scheme illusttration" loading="lazy">
                            </button>
-
                         </div>
                      </div>
-
-
                   </div>
                </div>
-
                <div class="pt-3">
-
                   <h5 class="fw-bold mt-2">Miscellaneous</h5>
-
                   <div class="d-flex gap-3 my-3">
                      <label for="_dm-fontSizeRange" class="form-label flex-shrink-0 mb-0">Root Font sizes</label>
                      <div class="position-relative flex-fill">
@@ -1435,12 +2065,10 @@ if (!isset($_SESSION['usuario_id'])) {
                         <output id="_dm-fontSizeValue" class="range-bubble"></output>
                      </div>
                   </div>
-
                   <h5 class="fw-bold mt-4">Scrollbars</h5>
                   <p class="mb-2">Hides native scrollbars and creates custom styleable overlay scrollbars.</p>
                   <div class="row">
                      <div class="col-5">
-
                         <!-- OPTION : Apply the OverlayScrollBar to the body. -->
                         <div class="d-flex align-items-center pt-1 mb-2">
                            <label class="form-check-label flex-fill" for="_dm-bodyScrollbarCheckbox">Body
@@ -1450,7 +2078,6 @@ if (!isset($_SESSION['usuario_id'])) {
                            </div>
                         </div>
 
-
                         <!-- OPTION : Apply the OverlayScrollBar to content containing class .scrollable-content. -->
                         <div class="d-flex align-items-center pt-1 mb-2">
                            <label class="form-check-label flex-fill" for="_dm-sidebarsScrollbarCheckbox">Navigation and
@@ -1459,40 +2086,29 @@ if (!isset($_SESSION['usuario_id'])) {
                               <input id="_dm-sidebarsScrollbarCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off">
                            </div>
                         </div>
-
                      </div>
                      <div class="col-7">
-
                         <div class="alert alert-warning mb-0" role="alert">
                            Please consider the performance impact of using any scrollbar plugin.
                         </div>
-
                      </div>
                   </div>
-
                </div>
-
-
             </div>
          </div>
-
-
       </div>
    </div>
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <!-- END - SETTINGS CONTAINER [ DEMO ] -->
 
-
    <!-- OFFCANVAS [ DEMO ] -->
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <div id="_dm-offcanvas" class="offcanvas" tabindex="-1">
-
       <!-- Offcanvas header -->
       <div class="offcanvas-header">
          <h5 class="offcanvas-title">Offcanvas Header</h5>
          <button type="button" class="btn-close btn-lg text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-
       <!-- Offcanvas content -->
       <div class="offcanvas-body">
          <h5>Content Here</h5>
@@ -1504,40 +2120,30 @@ if (!isset($_SESSION['usuario_id'])) {
             tenetur impedit error quod exercitationem ut ad provident quisquam omnis! Nostrum quasi ex delectus vero,
             facilis aut recusandae deleniti beatae. Qui velit commodi inventore.</p>
       </div>
-
    </div>
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <!-- END - OFFCANVAS [ DEMO ] -->
 
-
    <!-- JAVASCRIPTS -->
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-
    <!-- Popper JS [ OPTIONAL ] -->
-   <script src="../assets/vendors/popperjs/popper.min.js"></script>
-
+   <script src="./assets/vendors/popperjs/popper.min.js"></script>
 
    <!-- Bootstrap JS [ OPTIONAL ] -->
-   <script src="../assets/vendors/bootstrap/bootstrap.min.js"></script>
-
+   <script src="./assets/vendors/bootstrap/bootstrap.min.js"></script>
 
    <!-- Nifty JS [ OPTIONAL ] -->
-   <script src="../assets/js/nifty.js"></script>
-
+   <script src="./assets/js/nifty.js"></script>
 
    <!-- Nifty Settings [ DEMO ] -->
-   <script src="../assets/js/demo-purpose-only.js"></script>
+   <script src="./assets/js/demo-purpose-only.js"></script>
 
-
-   <!-- Chart JS Scripts [ OPTIONAL ] -->
-   <script src="../assets/vendors/chart.js/chart.umd.min.js"></script>
-
+   <!-- Zangdar Script [ OPTIONAL ] -->
+   <script src="./assets/vendors/zangdar/zangdar.min.js"></script>
 
    <!-- Initialize [ SAMPLE ] -->
-   <script src="../assets/pages/dashboard-1.js"></script>
-
-
+   <script src="./assets/pages/form-wizard.js"></script>
 
 </body>
 

@@ -1,23 +1,29 @@
+<?php
+session_start();
+// Comprobar si existe una sesión de usuario
+if (!isset($_SESSION['usuario_id'])) {
+   header('Location: ./login.php');
+   exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light" data-scheme="navy">
 
 <head>
    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-   <meta name="description" content="Nifty is a responsive admin dashboard template based on Bootstrap 5 framework. There are a lot of useful components.">
-   <title>Dashboard 1 | Nifty - Admin Template</title>
-
+   <meta name="description" content="Interactive Tables and Data Grids for JavaScript.">
+   <title>Tabulator | Nifty - Admin Template</title>
 
    <!-- STYLESHEETS -->
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
    <!-- Fonts [ OPTIONAL ] -->
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
 
-
    <!-- Bootstrap CSS [ REQUIRED ] -->
+   <link rel="stylesheet" href="./assets/css/styles.css">
    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
 
    <!-- Nifty CSS [ REQUIRED ] -->
@@ -29,685 +35,134 @@
    <!-- Demo purpose CSS [ DEMO ] -->
    <link rel="stylesheet" href="./assets/css/demo-purpose/demo-settings.min.css">
 
-
    <!-- Favicons [ OPTIONAL ] -->
    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
    <link rel="manifest" href="./site.webmanifest">
-
+   <!-- Tabulator Style [ OPTIONAL ] -->
+   <link rel="stylesheet" href="./assets/vendors/tabulator/tabulator.min.css">
 </head>
 
 <body class="out-quart">
 
-
    <!-- PAGE CONTAINER -->
+   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <div id="root" class="root mn--max tm--expanded-hd">
 
       <!-- CONTENTS -->
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <section id="content" class="content">
-         <div class="content__header content__boxed overlapping">
+         <div class="content__header content__boxed overlapping background-custom-digital">
             <div class="content__wrap">
 
+               <!-- Breadcrumb -->
+               <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                     <li class="breadcrumb-item"><a href="views/home.php">Home</a></li>
+                     <!--<li class="breadcrumb-item"><a href="./tables.html">Tables</a></li>-->
+                     <li class="breadcrumb-item active" aria-current="page">Resumen de Candidatos</li>
+                  </ol>
+               </nav>
+               <!-- END : Breadcrumb -->
 
-               <!-- Page title and information -->
-               <h1 class="page-title mb-2">Dashboard</h1>
-               <h2 class="h5">Welcome back to the Dashboard.</h2>
-               <p>Scroll down to see quick links and overviews of your Server, To do list<br> Order status or get some Help using Nifty.</p>
-               <!-- END : Page title and information -->
+               <h1 class="page-title mb-0 mt-2">Resumen de Candidatos</h1>
 
+               <p class="lead">
+                  Se muestran los candidatos registrados.
+               </p>
             </div>
-
          </div>
-
 
          <div class="content__boxed">
             <div class="content__wrap">
                <div class="row">
-                  <div class="col-xl-7 mb-3 mb-xl-0">
-
-                     <div class="card h-100">
-                        <div class="card-header d-flex align-items-center border-0">
-                           <div class="me-auto">
-                              <h3 class="h4 m-0">Network</h3>
-                           </div>
-                           <div class="toolbar-end">
-                              <button type="button" class="btn btn-icon btn-sm btn-hover btn-light" aria-label="Refresh Network Chart">
-                                 <i class="demo-pli-repeat-2 fs-5"></i>
-                              </button>
-                              <div class="dropdown">
-                                 <button class="btn btn-icon btn-sm btn-hover btn-light" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Network dropdown">
-                                    <i class="demo-pli-dot-horizontal fs-4"></i>
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                 </button>
-                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                       <a href="#" class="dropdown-item">
-                                          <i class="demo-pli-pen-5 fs-5 me-2"></i> Edit Date
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="#" class="dropdown-item">
-                                          <i class="demo-pli-refresh fs-5 me-2"></i> Refresh
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                       <a href="#" class="dropdown-item">
-                                          <i class="demo-pli-file-csv fs-5 me-2"></i> Save as CSV
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="#" class="dropdown-item">
-                                          <i class="demo-pli-calendar-4 fs-5 me-2"></i> View Details
-                                       </a>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
-                        </div>
-
-
-                        <!-- Network - Area Chart -->
-                        <div class="card-body py-0" style="height: 250px; max-height: 275px">
-                           <canvas id="_dm-networkChart"></canvas>
-                        </div>
-                        <!-- END : Network - Area Chart -->
-
-
-                        <div class="card-body mt-4">
-                           <div class="row">
-                              <div class="col-md-8">
-
-                                 <!-- CPU Temperature -->
-                                 <h4 class="h5 mb-3">CPU Temperature</h4>
-                                 <div class="row">
-                                    <div class="col-5">
-                                       <div class="h5 display-6 fw-normal">
-                                          43.7 <span class="fw-bold fs-5 align-top">°C</span>
-                                       </div>
-                                    </div>
-                                    <div class="col-7 text-sm">
-                                       <div class="d-flex justify-content-between align-items-start px-3 mb-3">
-                                          Min Values
-                                          <span class="d-block badge bg-success ms-auto">27°</span>
-                                       </div>
-                                       <div class="d-flex justify-content-between align-items-start px-3">
-                                          Max Values
-                                          <span class="d-block badge bg-danger ms-auto">89°</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- END : CPU Temperature -->
-
-                                 <!-- Today Tips -->
-                                 <div class="mt-4">
-                                    <h5>Today Tips</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-                                 </div>
-                                 <!-- END : Today Tips -->
-
-                              </div>
-                              <div class="col-md-4">
-
-                                 <!-- Bandwidth usage and progress bars -->
-                                 <h4 class="h5 mb-3">Bandwidth Usage</h4>
-                                 <div class="h2 fw-normal">
-                                    754.9<span class="ms-2 fs-6 align-top">Mbps</span>
-                                 </div>
-
-
-                                 <div class="mt-4 mb-2 d-flex justify-content-between">
-                                    <span class="">Income</span>
-                                    <span class="">70%</span>
-                                 </div>
-                                 <div class="progress progress-md">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-label="Incoming Progress" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-
-
-                                 <div class="mt-4 mb-2 d-flex justify-content-between">
-                                    <span class="">Outcome</span>
-                                    <span class="">10%</span>
-                                 </div>
-                                 <div class="progress progress-md">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-label="Outcome Progress" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                                 <!-- END : Bandwidth usage and progress bars -->
-
-
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-xl-5">
-                     <div class="row">
-                        <div class="col-sm-6">
-
-
-                           <!-- Tile - HDD Usage -->
-                           <div class="card bg-success text-white overflow-hidden mb-3">
-                              <div class="p-3 pb-2">
-                                 <h5 class="mb-3"><i class="demo-psi-data-storage text-reset text-opacity-75 fs-3 me-2"></i> HDD Usage</h5>
-                                 <ul class="list-group list-group-borderless">
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Free Space</div>
-                                       <span class="fw-bold">132Gb</span>
-                                    </li>
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Used space</div>
-                                       <span class="fw-bold">1,45Gb</span>
-                                    </li>
-                                 </ul>
-                              </div>
-
-                              <!-- Area Chart -->
-                              <div class="py-0" style="height: 70px; margin: 0 -5px -5px;">
-                                 <canvas id="_dm-hddChart"></canvas>
-                              </div>
-                              <!-- END : Area Chart -->
-
-                           </div>
-                           <!-- END : Tile - HDD Usage -->
-
-
-                        </div>
-                        <div class="col-sm-6">
-
-
-                           <!-- Tile - Earnings -->
-                           <div class="card bg-info text-white overflow-hidden mb-3">
-                              <div class="p-3 pb-2">
-                                 <h5 class="mb-3"><i class="demo-psi-coin text-reset text-opacity-75 fs-2 me-2"></i> Earning</h5>
-                                 <ul class="list-group list-group-borderless">
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Today</div>
-                                       <span class="fw-bold">$764</span>
-                                    </li>
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Last 7 Day</div>
-                                       <span class="fw-bold">$1,332</span>
-                                    </li>
-                                 </ul>
-                              </div>
-
-                              <!-- Line Chart -->
-                              <div class="py-0" style="height: 70px; margin: 0 -5px -5px;">
-                                 <canvas id="_dm-earningChart"></canvas>
-                              </div>
-                              <!-- END : Line Chart -->
-
-                           </div>
-                           <!-- END : Tile - Earnings -->
-
-
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="col-sm-6">
-
-
-                           <!-- Tile - Sales -->
-                           <div class="card bg-purple text-white overflow-hidden mb-3">
-                              <div class="p-3 pb-2">
-                                 <h5 class="mb-3"><i class="demo-psi-basket-coins text-reset text-opacity-75 fs-2 me-2"></i> Sales</h5>
-                                 <ul class="list-group list-group-borderless">
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Today</div>
-                                       <span class="fw-bold">$764</span>
-                                    </li>
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Last 7 Day</div>
-                                       <span class="fw-bold">$1,332</span>
-                                    </li>
-                                 </ul>
-                              </div>
-
-                              <!-- Bar Chart -->
-                              <div class="py-0" style="height: 70px">
-                                 <canvas id="_dm-salesChart"></canvas>
-                              </div>
-                              <!-- END : Bar Chart -->
-
-                           </div>
-                           <!-- END : Tile - Sales -->
-
-
-                        </div>
-                        <div class="col-sm-6">
-
-                           <!-- Tile - Task Progress -->
-                           <div class="card bg-warning text-white overflow-hidden mb-3">
-                              <div class="p-3 pb-2">
-                                 <h5 class="mb-3"><i class="demo-psi-basket-coins text-reset text-opacity-75 fs-2 me-2"></i> Progress</h5>
-                                 <ul class="list-group list-group-borderless">
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Completed</div>
-                                       <span class="fw-bold">34</span>
-                                    </li>
-                                    <li class="list-group-item p-0 text-reset d-flex justify-content-between align-items-start">
-                                       <div class="me-auto">Total</div>
-                                       <span class="fw-bold">79</span>
-                                    </li>
-                                 </ul>
-                              </div>
-
-                              <!-- Horizontal Bar Chart -->
-                              <div class="py-0 pb-2" style="height: 70px">
-                                 <canvas id="_dm-taskChart"></canvas>
-                              </div>
-                              <!-- END : Horizontal Bar Chart -->
-
-                           </div>
-                           <!-- END : Tile - Task Progress -->
-
-                        </div>
-                     </div>
-
-
-                     <!-- Simple state widget -->
+                  <div class="col-xl">
                      <div class="card">
-                        <div class="card-body text-center">
-                           <div class="d-flex align-items-center">
-                              <div class="flex-shrink-0 p-3">
-                                 <div class="h3 display-3">95</div>
-                                 <span class="h6">New Friends</span>
+                        <div class="card-body">
+
+                           <h3 class="h4 card-title">Filter Data</h3>
+                           <!-- Toolbar -->
+                           <div class="d-flex gap-2 py-3" style="max-width: 700px;">
+                              <div>
+                                 <select id="_dm-filterField" class="form-select">
+                                    <option value="none">Select field</option>
+                                    <option value="name">Perfil DH</option>
+                                    <option value="gender">Perfil</option>
+                                    <option value="rating">Nombres y Apellidos</option>
+                                    <option value="col">Expectativa Salarial</option>
+                                 </select>
                               </div>
-                              <div class="flex-grow-1 text-center ms-3">
-                                 <p class="text-body-secondary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                                 <button class="btn btn-sm btn-danger">View Details</button>
+                              <div id="dropdownContainer" style="width: 200px; position: relative;">
+                                 <input type="text" id="dropdownButton" class="form-control" placeholder="Escribe para filtrar...">
+                                 <div class="checklist" id="checkboxList" style="display: none; position: absolute; background: white; width: 100%; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                                    <?php if (!empty($perfilDH)) : ?>
+                                       <?php foreach ($perfilDH as $perfil) : ?>
+                                          <div class="checkItem">
+                                             <input type="checkbox" id="<?php echo $perfil['id_perfil'] ?>" name="<?php echo $perfil['descripcion_perfil'] ?>"><label for="<?php echo $perfil['id_perfil'] ?>"><?php echo $perfil['descripcion_perfil'] ?></label></input>
+                                          </div>
 
-                                 <!-- Social media statistics -->
-                                 <div class="mt-4 pt-3 d-flex justify-content-around border-top">
-                                    <div class="text-center">
-                                       <h4 class="mb-1">1,345</h4>
-                                       <small class="text-body-secondary">Following</small>
-                                    </div>
-                                    <div class="text-center">
-                                       <h4 class="mb-1">23k</h4>
-                                       <small class="text-body-secondary">Followers</small>
-                                    </div>
-                                    <div class="text-center">
-                                       <h4 class="mb-1">278</h4>
-                                       <small class="text-body-secondary">Posts</small>
-                                    </div>
-                                 </div>
-                                 <!-- END : Social media statistics -->
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- END : Simple state widget -->
-
-
-                  </div>
-               </div>
-
-            </div>
-         </div>
-
-
-         <div class="bg-body-secondary bg-opacity-50 my-3 pt-3">
-            <div class="content__boxed">
-               <div class="content__wrap">
-
-                  <div class="row gx-5 gy-5 gy-md-0">
-                     <div class="col-md-4">
-
-
-                        <!-- TODO List -->
-                        <h4 class="mb-3">To-do list</h4>
-                        <ul class="list-group list-group-borderless">
-                           <li class="list-group-item px-0">
-                              <div class="form-check ">
-                                 <input id="_dm-todoList1" class="form-check-input" type="checkbox" checked>
-                                 <label for="_dm-todoList1" class="form-check-label text-decoration-line-through">
-                                    Find an idea <span class="badge bg-danger text-decoration-line-through">Important</span>
-                                 </label>
-                              </div>
-                           </li>
-                           <li class="list-group-item px-0">
-                              <div class="form-check">
-                                 <input id="_dm-todoList2" class="form-check-input" type="checkbox">
-                                 <label for="_dm-todoList2" class="form-check-label">
-                                    Do some work
-                                 </label>
-                              </div>
-                           </li>
-                           <li class="list-group-item px-0">
-                              <div class="form-check">
-                                 <input id="_dm-todoList3" class="form-check-input" type="checkbox">
-                                 <label for="_dm-todoList3" class="form-check-label">
-                                    Read the book
-                                 </label>
-                              </div>
-                           </li>
-                           <li class="list-group-item px-0">
-                              <div class="form-check">
-                                 <input id="_dm-todoList4" class="form-check-input" type="checkbox">
-                                 <label for="_dm-todoList4" class="form-check-label">
-                                    Upgrade server <span class="badge bg-warning">Warning</span>
-                                 </label>
-                              </div>
-                           </li>
-                           <li class="list-group-item px-0">
-                              <div class="form-check">
-                                 <input id="_dm-todoList5" class="form-check-input" type="checkbox">
-                                 <label for="_dm-todoList5" class="form-check-label">
-                                    Redesign my logo <span class="badge bg-info">2 Mins</span>
-                                 </label>
-                              </div>
-                           </li>
-                        </ul>
-
-                        <div class="input-group mt-3">
-                           <input type="text" class="form-control form-control-sm" placeholder="Add new list" aria-label="Add new list" aria-describedby="button-addon">
-                           <button id="button-addon" class="btn btn-sm btn-secondary hstack gap-2" type="button">
-                              <i class="demo-psi-add text-dark text-opacity-40 fs-4"></i>
-                              <span class="vr"></span>
-                              Add New
-                           </button>
-                        </div>
-                        <!-- END : TODO List -->
-
-
-                     </div>
-                     <div class="col-md-4">
-
-
-                        <!-- Service options -->
-                        <h4 class="mb-3">Services</h4>
-                        <div class="list-group list-group-borderless">
-                           <div class="list-group-item px-0 mb-2">
-                              <div class="d-flex justify-content-between">
-                                 <label class="form-check-label h5 mb-0" for="_dm-dbPersonalStatus">Show my personal status</label>
-                                 <div class="form-check form-switch">
-                                    <input id="_dm-dbPersonalStatus" class="form-check-input" type="checkbox" checked>
+                                       <?php endforeach; ?>
+                                    <?php endif; ?>
                                  </div>
                               </div>
-                              <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</span>
-                           </div>
 
-                           <div class="list-group-item px-0 mb-2">
-                              <div class="d-flex justify-content-between">
-                                 <label class="form-check-label h5 mb-0" for="_dm-dbOfflineContact">Show offline contact</label>
-                                 <div class="form-check form-switch">
-                                    <input id="_dm-dbOfflineContact" class="form-check-input" type="checkbox">
-                                 </div>
+                              <div>
+                                 <!-- <input id="_dm-filterValue" class="form-control" type="text" placeholder="value to filter"> -->
+                                 <button id="buscarCandidato" class="btn btn-primary text-nowrap color-button-search">Buscar</button>
                               </div>
-                              <span>Aenean commodo ligula eget dolor. Aenean massa.</span>
+
                            </div>
 
-                           <div class="list-group-item px-0 mb-2">
-                              <div class="d-flex justify-content-between">
-                                 <label class="form-check-label h5 mb-0" for="_dm-dbMuteNotifications">Mute notifications</label>
-                                 <div class="form-check form-switch">
-                                    <input id="_dm-dbMuteNotifications" class="form-check-input" type="checkbox">
-                                 </div>
-                              </div>
-                              <span>Aenean commodo ligula eget dolor. Aenean massa.</span>
-                           </div>
+                           <h3 class="h4">Candidatos</h3>
 
-                           <div class="list-group-item px-0 mb-2">
-                              <div class="d-flex justify-content-between">
-                                 <label class="form-check-label h5 mb-0" for="_dm-dbInvisibleMode">Invisible Mode</label>
-                                 <div class="form-check form-switch">
-                                    <input id="_dm-dbInvisibleMode" class="form-check-input" type="checkbox" checked>
-                                 </div>
-                              </div>
-                              <span>Nascetur ridiculus mus.</span>
-                           </div>
+                           <?php if (!empty($candidatos)) : ?>
+                              <table id="data-table" class="table-general">
+                                 <thead>
+                                    <tr class="headersClass">
+                                       <th>ID</th>
+                                       <th>Nombres y Apellidos</th>
+                                       <th>Perfiles</th>
+                                       <th>Expectativa<br>Salarial</th>
+                                       <th>Contacto</th>
+                                       <th>Curriculum Vitae</th>
+                                       <th>Nivel Inglés</th>
+                                       <th>Comentario<br> Reclutador</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <?php foreach ($candidatos as $candidato) : ?>
+                                       <tr class="table-general">
+                                          <td><?php echo htmlspecialchars($candidato['id_candidato']); ?></td>
+                                          <td><a href="./candidatos-registro.php?id=<?php echo $candidato['id_candidato'] ?>"><?php echo htmlspecialchars($candidato['nombre_completo2_candidato']); ?></a></td>
+                                          <td><button class="button-custom" data-id="<?php echo $candidato['id_candidato'] ?>" onclick="showDetails(this, 'perfil')">Ver</button></td>
+                                          <td><button class="button-custom" data-id="<?php echo $candidato['id_candidato'] ?>" onclick="showDetails(this, 'salario')">Ver</button></td>
+                                          <td><button class="button-custom" data-id="<?php echo $candidato['id_candidato'] ?>" onclick="showDetails(this, 'contacto')">Ver</button></td>
+                                          <td><?php echo htmlspecialchars($candidato['nombre_archivo_candidato']); ?></td>
+                                          <td><?php echo htmlspecialchars($candidato['descripcion_ingles_conversacional']); ?></td>
+                                          <td><button class="button-custom" data-id="<?php echo $candidato['id_candidato'] ?>" onclick="showDetails(this, 'comentario')">Ver</button></td>
+                                       </tr>
+                                    <?php endforeach; ?>
+                                 </tbody>
+                              </table>
+                           <?php else : ?>
+                              <p>No se encontraron candidatos.</p>
+                           <?php endif; ?>
+
+                           <script src="./assets/pages/candidato.js"></script>
                         </div>
-                        <!-- END : Service options -->
-
-
-                     </div>
-                     <div class="col-md-4">
-
-                        <!-- User quote  -->
-                        <div class="d-flex align-items-center position-relative hv-grow-parent hv-outline-parent">
-                           <div class="flex-shrink-0">
-                              <img class="hv-gc hv-oc img-lg rounded-circle" src="./assets/img/profile-photos/8.png" alt="Profile Picture" loading="lazy">
-                           </div>
-                           <div class="flex-grow-1 ms-3">
-                              <a href="#" class="d-block stretched-link h5 link-offset-2-hover text-decoration-none link-underline-hover mb-0">Kathryn Obrien</a>
-                              Project manager
-                           </div>
-                        </div>
-
-                        <figure class="d-flex flex-column align-items-center justify-content-center my-4">
-                           <blockquote class="blockquote mb-0">
-                              <p class="quote">Lorem ipsum dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
-                           </blockquote>
-                        </figure>
-
-                        <div class="border-top pt-3">
-                           <a href="#" class="btn btn-icon btn-link text-indigo" aria-label="Facebook button">
-                              <i class="demo-psi-facebook fs-4"></i>
-                           </a>
-                           <a href="#" class="btn btn-icon btn-link text-info" aria-label="Twitter button">
-                              <i class="demo-psi-twitter fs-4"></i>
-                           </a>
-                           <a href="#" class="btn btn-icon btn-link text-red" aria-label="Google plus button">
-                              <i class="demo-psi-google-plus fs-4"></i>
-                           </a>
-                           <a href="#" class="btn btn-icon btn-link text-orange" aria-label="Instagram button">
-                              <i class="demo-psi-instagram fs-4"></i>
-                           </a>
-                        </div>
-                        <!-- END : User quote  -->
-
-
                      </div>
                   </div>
-
-
                </div>
             </div>
          </div>
-
-
-         <div class="content__boxed">
-            <div class="content__wrap">
-
-
-               <!-- Table with toolbar -->
-               <div class="card">
-                  <div class="card-header">
-                     <h5 class="card-title mb-3">Order Status</h5>
-                     <div class="row">
-
-                        <!-- Left toolbar -->
-                        <div class="col-md-6 d-flex gap-1 align-items-center mb-3">
-                           <button class="btn btn-primary hstack gap-2">
-                              <i class="demo-psi-add fs-5"></i>
-                              <span class="vr"></span>
-                              Add New
-                           </button>
-                           <button class="btn btn-icon btn-outline-light" aria-label="Print table">
-                              <i class="demo-pli-printer fs-5"></i>
-                           </button>
-                           <div class="btn-group">
-                              <button class="btn btn-icon btn-outline-light" aria-label="Information"><i class="demo-pli-exclamation fs-5"></i></button>
-                              <button class="btn btn-icon btn-outline-light" aria-label="Remove"><i class="demo-pli-recycling fs-5"></i></button>
-                           </div>
-                        </div>
-                        <!-- END : Left toolbar -->
-
-                        <!-- Right Toolbar -->
-                        <div class="col-md-6 d-flex gap-1 align-items-center justify-content-md-end mb-3">
-                           <div class="form-group">
-                              <input type="text" placeholder="Search..." class="form-control" autocomplete="off">
-                           </div>
-                           <div class="btn-group">
-                              <button class="btn btn-icon btn-outline-light" aria-label="Download"><i class="demo-pli-download-from-cloud fs-5"></i></button>
-                              <div class="btn-group dropdown">
-                                 <button class="btn btn-icons btn-outline-light dropdown-toggle hstack gap-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Options
-                                    <span class="vr"></span>
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                 </button>
-                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    <li>
-                                       <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                 </ul>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- END : Right Toolbar -->
-
-                     </div>
-                  </div>
-
-                  <div class="card-body">
-                     <div class="table-responsive">
-                        <table class="table table-striped">
-                           <thead>
-                              <tr>
-                                 <th>Invoice</th>
-                                 <th>User</th>
-                                 <th>Order date</th>
-                                 <th>Amount</th>
-                                 <th class="text-center">Status</th>
-                                 <th class="text-center">Tracking Number</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td><a href="#" class="btn-link"> Order #53431</a></td>
-                                 <td>Steve N. Horton</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 22, 2024</span></td>
-                                 <td>$45.00</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-success">Paid</div>
-                                 </td>
-                                 <td class="text-center">-</td>
-                              </tr>
-                              <tr>
-                                 <td><a href="#" class="btn-link"> Order #53432</a></td>
-                                 <td>Charles S Boyle</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 24, 2024</span></td>
-                                 <td>$245.30</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-info">Shipped</div>
-                                 </td>
-                                 <td class="text-center">CGX0089734531</td>
-                              </tr>
-                              <tr>
-                                 <td><a href="#" class="btn-link"> Order #53433</a></td>
-                                 <td>Lucy Doe</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 24, 2024</span></td>
-                                 <td>$38.00</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-info">Shipped</div>
-                                 </td>
-                                 <td class="text-center">CGX0089934571</td>
-                              </tr>
-                              <tr>
-                                 <td><a href="#" class="btn-link"> Order #53434</a></td>
-                                 <td>Teresa L. Doe</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 15, 2024</span></td>
-                                 <td>$77.99</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-info">Shipped</div>
-                                 </td>
-                                 <td class="text-center">CGX0089734574</td>
-                              </tr>
-                              <tr>
-                                 <td><a href="#" class="btn-link"> Order #53435</a></td>
-                                 <td>Teresa L. Doe</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 12, 2024</span></td>
-                                 <td>$18.00</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-success">Paid</div>
-                                 </td>
-                                 <td class="text-center">-</td>
-                              </tr>
-                              <tr>
-                                 <td><a href="#" class="btn-link">Order #53437</a></td>
-                                 <td>Charles S Boyle</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 17, 2024</span></td>
-                                 <td>$658.00</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-danger">Refunded</div>
-                                 </td>
-                                 <td class="text-center">-</td>
-                              </tr>
-                              <tr>
-                                 <td><a href="#" class="btn-link">Order #536584</a></td>
-                                 <td>Scott S. Calabrese</td>
-                                 <td><span class="text-body"><i class="demo-pli-clock"></i> Apr 19, 2024</span></td>
-                                 <td>$45.58</td>
-                                 <td class="text-center fs-5">
-                                    <div class="d-block badge bg-warning">Unpaid</div>
-                                 </td>
-                                 <td class="text-center">-</td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-
-                     <nav class="text-align-center mt-5" aria-label="Table navigation">
-                        <ul class="pagination justify-content-center">
-                           <li class="page-item disabled">
-                              <a class="page-link" href="#">Previous</a>
-                           </li>
-                           <li class="page-item active" aria-current="page">
-                              <span class="page-link">1</span>
-                           </li>
-                           <li class="page-item"><a class="page-link" href="#">2</a></li>
-                           <li class="page-item"><a class="page-link" href="#">3</a></li>
-                           <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                           <li class="page-item"><a class="page-link" href="#">5</a></li>
-                           <li class="page-item">
-                              <a class="page-link" href="#">Next</a>
-                           </li>
-                        </ul>
-                     </nav>
-                  </div>
-               </div>
-               <!-- END : Table with toolbar -->
-
-
-            </div>
-         </div>
-
-
-         <!-- FOOTER -->
-
-         <footer class="mt-auto">
-            <div class="content__boxed">
-               <div class="content__wrap py-3 py-md-1 d-flex flex-column flex-md-row align-items-md-center">
-                  <div class="text-nowrap mb-4 mb-md-0">Copyright &copy; 2024 <a href="#" class="ms-1 btn-link fw-bold">My Company</a></div>
-                  <nav class="nav flex-column gap-1 flex-md-row gap-md-3 ms-md-auto">
-                     <a class="nav-link link-offset-3 link-underline-hover px-0" href="#">Policy Privacy</a>
-                     <a class="nav-link link-offset-3 link-underline-hover px-0" href="#">Terms and conditions</a>
-                     <a class="nav-link link-offset-3 link-underline-hover px-0" href="#">Contact Us</a>
-                  </nav>
-               </div>
-            </div>
-         </footer>
 
          <!-- END - FOOTER -->
-
-
       </section>
-
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <!-- END - CONTENTS -->
-
 
       <!-- HEADER -->
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <header class="header">
+      <header class="header background-custom-digital">
          <div class="header__inner">
 
             <!-- Brand -->
@@ -715,14 +170,9 @@
                <div class="brand-wrap">
 
                   <!-- Brand logo -->
-                  <a href="index.html" class="brand-img stretched-link">
-                     <img src="./assets/img/logo.svg" alt="Nifty Logo" class="Nifty logo" width="16" height="16">
+                  <a href="index.html" class="brand-img stretched-link" style="display: flex;">
+                     <img src="https://digitalhublatam.com/wp-content/uploads/2023/03/logo-digitalhub.png.webp" alt="Nifty Logo" class="Nifty logo" style="width: 75%;height:auto;filter: brightness(0) invert(1);">
                   </a>
-
-
-                  <!-- Brand title -->
-                  <div class="brand-title">Nifty</div>
-
 
                   <!-- You can also use IMG or SVG instead of a text element. -->
                   <!--
@@ -749,24 +199,6 @@
 
                   <div class="vr mx-1 d-none d-md-block"></div>
 
-                  <!-- Searchbox -->
-                  <div class="header-searchbox">
-
-                     <!-- Searchbox toggler for small devices -->
-                     <label for="header-search-input" class="header__btn d-md-none btn btn-icon rounded-pill shadow-none border-0 btn-sm" type="button">
-                        <i class="demo-psi-magnifi-glass"></i>
-                     </label>
-
-                     <!-- Searchbox input -->
-                     <form class="searchbox searchbox--auto-expand searchbox--hide-btn input-group">
-                        <input id="header-search-input" class="searchbox__input form-control bg-transparent" type="search" placeholder="Type for search . . ." aria-label="Search">
-                        <div class="searchbox__backdrop">
-                           <button class="searchbox__btn header__btn btn btn-icon rounded shadow-none border-0 btn-sm" type="button">
-                              <i class="demo-pli-magnifi-glass"></i>
-                           </button>
-                        </div>
-                     </form>
-                  </div>
                </div>
                <!-- End - Content Header - Left Side -->
 
@@ -837,7 +269,8 @@
                                     <h5 class="flex-grow-1 m-0 text-reset">News</h5>
                                  </div>
                                  <small class="list-group-item text-warning-emphasis">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic dolore unde autem, molestiae eum laborum aliquid at commodi cum? Blanditiis.
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic dolore unde autem,
+                                    molestiae eum laborum aliquid at commodi cum? Blanditiis.
                                  </small>
                               </div>
 
@@ -854,7 +287,8 @@
                                     </div>
                                     <div class="flex-grow-1">
                                        <div class="d-flex justify-content-between align-items-start">
-                                          <a href="#" class="h5 d-block mb-0 stretched-link text-decoration-none">Data Backup</a>
+                                          <a href="#" class="h5 d-block mb-0 stretched-link text-decoration-none">Data
+                                             Backup</a>
                                           <span class="badge bg-success rounded-pill ms-auto">40%</span>
                                        </div>
                                        <small class="text-body-secondary">Current usage of disks for backups.</small>
@@ -867,7 +301,8 @@
                                     </div>
                                     <div class="flex-grow-1">
                                        <a href="#" class="h5 d-block mb-0 stretched-link text-decoration-none">Support</a>
-                                       <small class="text-body-secondary">Have any questions ? please don't hesitate to ask.</small>
+                                       <small class="text-body-secondary">Have any questions ? please don't hesitate to
+                                          ask.</small>
                                     </div>
                                  </div>
 
@@ -888,7 +323,8 @@
                                     </div>
                                     <div class="flex-grow-1">
                                        <a href="#" class="h5 d-block mb-0 stretched-link text-decoration-none">Location</a>
-                                       <small class="text-body-secondary">From our location up here, we kept in close touch.</small>
+                                       <small class="text-body-secondary">From our location up here, we kept in close
+                                          touch.</small>
                                     </div>
                                  </div>
                               </div>
@@ -916,121 +352,11 @@
                                  <a href="#" class="btn btn-primary">Browse Gallery</a>
                               </div>
 
-
                            </div>
                         </div>
                      </div>
                   </div>
                   <!-- End - Mega Dropdown -->
-
-
-                  <!-- Notification Dropdown -->
-                  <div class="dropdown">
-
-                     <!-- Toggler -->
-                     <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="Notification dropdown" aria-expanded="false">
-                        <span class="d-block position-relative">
-                           <i class="demo-psi-bell"></i>
-
-                           <span class="badge badge-super rounded-pill bg-danger p-1">
-                              <span class="visually-hidden">unread messages</span>
-                           </span>
-
-                           <!-- Set custom notification count -->
-                           <!--
-                     <span class="badge badge-super rounded-pill bg-danger p-1">
-                     	 19<span class="visually-hidden">unread messages</span>
-                     </span>
-                     -->
-
-                        </span>
-                     </button>
-
-
-                     <!-- Notification dropdown menu -->
-                     <div class="dropdown-menu dropdown-menu-end w-md-300px">
-                        <div class="border-bottom px-3 py-2 mb-3">
-                           <h5>Notifications</h5>
-                        </div>
-
-
-                        <div class="list-group list-group-borderless">
-
-
-                           <!-- List item -->
-                           <div class="list-group-item list-group-item-action d-flex align-items-center mb-3">
-                              <div class="flex-shrink-0 me-3">
-                                 <i class="demo-psi-data-settings text-danger fs-2"></i>
-                              </div>
-                              <div class="flex-grow-1">
-                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Your storage is full</a>
-                                 <small class="text-body-secondary">Local storage is nearly full.</small>
-                              </div>
-                           </div>
-
-
-                           <!-- List item -->
-                           <div class="list-group-item list-group-item-action d-flex align-items-center mb-3">
-                              <div class="flex-shrink-0 me-3">
-                                 <i class="demo-psi-pen-5 text-info fs-2"></i>
-                              </div>
-                              <div class="flex-grow-1">
-                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Writing a New Article</a>
-                                 <small class="text-body-secondary">Wrote a news article for the John Mike</small>
-                              </div>
-                           </div>
-
-
-                           <!-- List item -->
-                           <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
-                              <div class="flex-shrink-0 me-3">
-                                 <i class="demo-psi-speech-bubble-3 text-success fs-2"></i>
-                              </div>
-                              <div class="flex-grow-1">
-                                 <div class="d-flex justify-content-between align-items-start">
-                                    <a href="#" class="h6 fw-normal mb-0 stretched-link text-decoration-none">Comment sorting</a>
-                                    <span class="badge bg-info rounded ms-auto">NEW</span>
-                                 </div>
-                                 <small class="text-body-secondary">You have 1,256 unsorted comments.</small>
-                              </div>
-                           </div>
-
-
-                           <!-- List item -->
-                           <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
-                              <div class="flex-shrink-0 me-3">
-                                 <img class="img-xs rounded-circle" src="./assets/img/profile-photos/7.png" alt="Profile Picture" loading="lazy">
-                              </div>
-                              <div class="flex-grow-1">
-                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Lucy Sent you a message</a>
-                                 <small class="text-body-secondary">30 minutes ago</small>
-                              </div>
-                           </div>
-
-
-                           <!-- List item -->
-                           <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
-                              <div class="flex-shrink-0 me-3">
-                                 <img class="img-xs rounded-circle" src="./assets/img/profile-photos/3.png" alt="Profile Picture" loading="lazy">
-                              </div>
-                              <div class="flex-grow-1">
-                                 <a href="#" class="h6 fw-normal d-block mb-0 stretched-link text-decoration-none">Jackson Sent you a message</a>
-                                 <small class="text-body-secondary">1 hours ago</small>
-                              </div>
-                           </div>
-
-                           <div class="text-center mb-2">
-                              <a href="#" class="btn-link text-primary icon-link icon-link-hover">
-                                 Show all Notifications
-                                 <i class="bi demo-psi-arrow-out-right"></i>
-                              </a>
-                           </div>
-
-                        </div>
-                     </div>
-                  </div>
-                  <!-- End - Notification dropdown -->
-
 
                   <!-- User dropdown -->
                   <div class="dropdown">
@@ -1103,7 +429,6 @@
                                     <i class="demo-pli-unlock fs-5 me-2"></i> Logout
                                  </a>
                               </div>
-
 
                            </div>
                         </div>
@@ -1211,7 +536,7 @@
                      <li class="nav-item has-sub">
 
 
-                        <a href="#" class="mininav-toggle nav-link active"><i class="demo-pli-home fs-5 me-2"></i>
+                        <a href="#" class="mininav-toggle nav-link collapsed"><i class="demo-pli-home fs-5 me-2"></i>
                            <span class="nav-label ms-1">Dashboard</span>
                         </a>
 
@@ -1219,15 +544,8 @@
                         <ul class="mininav-content nav collapse">
                            <li data-popper-arrow class="arrow"></li>
                            <li class="nav-item">
-                              <a href="./index.html" class="nav-link active">Dashboard 1</a>
+                              <a href="./views/home.php" class="nav-link">Dashboard 1</a>
                            </li>
-                           <!--<li class="nav-item">
-                              <a href="./dashboard-2.html" class="nav-link">Dashboard 2</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./dashboard-3.html" class="nav-link">Dashboard 3</a>
-                           </li>-->
-
                         </ul>
                         <!-- END : Dashboard submenu list -->
 
@@ -1238,106 +556,62 @@
                </div>
                <!-- END : Navigation Category -->
 
-
-               <!-- Components Category -->
+               <!-- More Category -->
                <div class="mainnav__categoriy py-3">
-                  <h6 class="mainnav__caption mt-0 fw-bold">Components</h6>
+                  <h6 class="mainnav__caption mt-0 fw-bold">Áreas</h6>
                   <ul class="mainnav__menu nav flex-column">
 
                      <!-- Link with submenu -->
                      <li class="nav-item has-sub">
 
-
-                        <a href="#" class="mininav-toggle nav-link collapsed"><i class="demo-pli-boot-2 fs-5 me-2"></i>
-                           <span class="nav-label ms-1">Ui Elements</span>
+                        <a href="#" class="mininav-toggle nav-link collapsed"><i class="demo-pli-tactic fs-5 me-2"></i>
+                           <span class="nav-label ms-1">Operaciones</span>
                         </a>
 
-                        <!-- Ui Elements submenu list -->
+                        <!-- Menu Levels submenu list -->
                         <ul class="mininav-content nav collapse">
                            <li data-popper-arrow class="arrow"></li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-buttons.html" class="nav-link">Buttons</a>
+                           <li class="nav-item has-sub">
+                              <a href="#" class="mininav-toggle nav-link collapsed">HeadHunting</a>
+                              <ul class="mininav-content nav collapse">
+                                 <li data-popper-arrow class="arrow"></li>
+                                 <li class="nav-item has-sub">
+                                    <a href="#" class="mininav-toggle nav-link collapsed">Módulo de Perfiles</a>
+                                    <!-- Nuevo tercer nivel de submenú -->
+                                    <ul class="mininav-content nav collapse">
+                                       <li data-popper-arrow class="arrow"></li>
+                                       <li class="nav-item">
+                                          <a href="#" class="nav-link">Crear Perfil</a>
+                                       </li>
+                                       <li class="nav-item">
+                                          <a href="#" class="nav-link">Resumen de Perfiles</a>
+                                       </li>
+                                    </ul>
+                                    <!-- Fin del nuevo tercer nivel de submenú -->
+                                 </li>
+                                 <li class="nav-item has-sub">
+                                    <a href="#" class="mininav-toggle nav-link collapsed">Módulo de Candidatos</a>
+                                    <!-- Nuevo tercer nivel de submenú -->
+                                    <ul class="mininav-content nav collapse">
+                                       <li data-popper-arrow class="arrow"></li>
+                                       <li class="nav-item">
+                                          <a href="candidatos-registro.php" class="nav-link">Crear Candidato</a>
+                                       </li>
+                                       <li class="nav-item">
+                                          <a href="candidatos.php" class="nav-link">Resumen de Candidatos</a>
+                                       </li>
+                                    </ul>
+                                    <!-- Fin del nuevo tercer nivel de submenú -->
+                                 </li>
+                              </ul>
                            </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-cards.html" class="nav-link">Cards</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-dropdowns.html" class="nav-link">Dropdowns</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-components.html" class="nav-link">Components</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-list-group.html" class="nav-link">List Group</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-typography.html" class="nav-link">Typography</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-modals.html" class="nav-link">Modals</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-progress.html" class="nav-link">Progress</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-placeholders.html" class="nav-link d-flex align-items-center">Placeholders<span class="badge bg-danger ms-auto">NEW</span></a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-tabs-and-accordions.html" class="nav-link">Tabs &amp; Accordions</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./ui-elements-tooltips-and-popover.html" class="nav-link">Tooltips &amp; Popover</a>
-                           </li>
-
                         </ul>
-                        <!-- END : Ui Elements submenu list -->
-
+                        <!-- END : Menu Levels submenu list -->
                      </li>
                      <!-- END : Link with submenu -->
-
-                     <!-- Link with submenu -->
-                     <li class="nav-item has-sub">
-
-
-                        <a href="#" class="mininav-toggle nav-link collapsed"><i class="demo-pli-pen-5 fs-5 me-2"></i>
-                           <span class="nav-label ms-1">Forms</span>
-                        </a>
-
-                        <!-- Forms submenu list -->
-                        <ul class="mininav-content nav collapse">
-                           <li data-popper-arrow class="arrow"></li>
-                           <li class="nav-item">
-                              <a href="./forms-general.html" class="nav-link">General</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./forms-tags.html" class="nav-link">Tags</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./forms-date-time-picker.html" class="nav-link">Date Time Picker</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./forms-validation.html" class="nav-link">Validation</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./forms-wizard.html" class="nav-link">Wizard</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./forms-file-uploads.html" class="nav-link">File Uploads</a>
-                           </li>
-                           <li class="nav-item">
-                              <a href="./forms-text-editor.html" class="nav-link">Text Editor</a>
-                           </li>
-
-                        </ul>
-                        <!-- END : Forms submenu list -->
-
-                     </li>
-                     <!-- END : Link with submenu -->
-                    
                   </ul>
                </div>
-               <!-- END : Components Category -->
-
+               <!-- END : More Category -->
             </div>
             <!-- End - Navigation menu -->
 
@@ -1345,23 +619,11 @@
             <!-- Bottom navigation menu -->
             <div class="mainnav__bottom-content border-top pb-2">
                <ul id="mainnav" class="mainnav__menu nav flex-column">
-                  <li class="nav-item has-sub">
-                     <a href="#" class="nav-link mininav-toggle collapsed" aria-expanded="false">
+                  <li class="nav-item">
+                     <a href="./logout.php" class="nav-link mininav-toggle collapsed" aria-expanded="false">
                         <i class="demo-pli-unlock fs-5 me-2"></i>
                         <span class="nav-label ms-1">Logout</span>
                      </a>
-                     <ul class="mininav-content nav flex-column collapse">
-                        <li data-popper-arrow class="arrow"></li>
-                        <li class="nav-item">
-                           <a href="#" class="nav-link">This device only</a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="#" class="nav-link">All Devices</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Lock screen</a>
-                        </li>
-                     </ul>
                   </li>
                </ul>
             </div>
@@ -1494,7 +756,8 @@
                   <!-- Simple news widget -->
                   <div class="p-3 mt-5 rounded bg-info-subtle text-info-emphasis">
                      <h5 class="text-info-emphasis">News</h5>
-                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui consequatur ipsum porro a repellat eaque exercitationem necessitatibus esse voluptate corporis.</p>
+                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui consequatur ipsum porro a repellat
+                        eaque exercitationem necessitatibus esse voluptate corporis.</p>
                      <small class="fst-italic">Last Update : Today 13:54</small>
                   </div>
                   <!-- End - Simple news widget -->
@@ -1509,7 +772,8 @@
                   <!-- Billing and Resports -->
                   <div class="px-3">
                      <h5 class="mb-3">Billing &amp; Reports</h5>
-                     <p>Get <span class="badge bg-danger">$15.00 off</span> your next bill by making sure your full payment reaches us before August 5th.</p>
+                     <p>Get <span class="badge bg-danger">$15.00 off</span> your next bill by making sure your full
+                        payment reaches us before August 5th.</p>
 
                      <h5 class="mt-5 mb-0">Amount Due On</h5>
                      <p>August 17, 2028</p>
@@ -1574,7 +838,8 @@
                               <input id="_dm-sbPersonalStatus" class="form-check-input" type="checkbox" checked>
                            </div>
                         </div>
-                        <small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</small>
+                        <small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetuer adipiscing
+                           elit.</small>
                      </div>
 
                      <div class="list-group-item mb-1">
@@ -1594,7 +859,8 @@
                               <input id="_dm-sbInvisibleMode" class="form-check-input" type="checkbox">
                            </div>
                         </div>
-                        <small class="text-body-secondary">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</small>
+                        <small class="text-body-secondary">Cum sociis natoque penatibus et magnis dis parturient montes,
+                           nascetur ridiculus mus.</small>
                      </div>
 
                   </div>
@@ -1644,16 +910,6 @@
    </div>
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <!-- END - PAGE CONTAINER -->
-
-
-   <!-- SCROLL TO TOP BUTTON -->
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-   <div class="scroll-container">
-      <a href="#root" class="scroll-page ratio ratio-1x1" aria-label="Scroll button"></a>
-   </div>
-   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-   <!-- END - SCROLL TO TOP BUTTON -->
-
 
    <!-- BOXED LAYOUT : BACKGROUND IMAGES CONTENT [ DEMO ] -->
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -1858,7 +1114,7 @@
    <!-- SETTINGS CONTAINER [ DEMO ] -->
    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
    <div id="_dm-settingsContainer" class="_dm-settings-container offcanvas offcanvas-end rounded-start" tabindex="-1">
-      <button id="_dm-settingsToggler" class="_dm-btn-settings btn btn-sm btn-danger p-2 rounded-0 rounded-start shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#_dm-settingsContainer" aria-label="Customization button" aria-controls="#_dm-settingsContainer">
+      <button id="_dm-settingsToggler" class="_dm-btn-settings btn btn-sm btn-danger p-2 rounded-0 rounded-start shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#_dm-settingsContainer" aria-label="Customization button" aria-controls="#_dm-settingsContainer" disabled>
          <i class="demo-psi-gear fs-1"></i>
       </button>
 
@@ -1901,7 +1157,8 @@
 
                <!-- OPTION : Centered Layout -->
                <div class="d-flex align-items-start pt-1 pb-3 mb-2">
-                  <label class="form-check-label flex-fill text-nowrap" for="_dm-centeredLayoutRadio">Centered Layout</label>
+                  <label class="form-check-label flex-fill text-nowrap" for="_dm-centeredLayoutRadio">Centered
+                     Layout</label>
                   <div class="form-check form-switch">
                      <input id="_dm-centeredLayoutRadio" class="form-check-input ms-0" type="radio" name="settingLayouts" autocomplete="off">
                   </div>
@@ -2217,7 +1474,8 @@
 
                         <!-- OPTION : Apply the OverlayScrollBar to the body. -->
                         <div class="d-flex align-items-center pt-1 mb-2">
-                           <label class="form-check-label flex-fill" for="_dm-bodyScrollbarCheckbox">Body scrollbar</label>
+                           <label class="form-check-label flex-fill" for="_dm-bodyScrollbarCheckbox">Body
+                              scrollbar</label>
                            <div class="form-check form-switch">
                               <input id="_dm-bodyScrollbarCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off">
                            </div>
@@ -2226,7 +1484,8 @@
 
                         <!-- OPTION : Apply the OverlayScrollBar to content containing class .scrollable-content. -->
                         <div class="d-flex align-items-center pt-1 mb-2">
-                           <label class="form-check-label flex-fill" for="_dm-sidebarsScrollbarCheckbox">Navigation and Sidebar</label>
+                           <label class="form-check-label flex-fill" for="_dm-sidebarsScrollbarCheckbox">Navigation and
+                              Sidebar</label>
                            <div class="form-check form-switch">
                               <input id="_dm-sidebarsScrollbarCheckbox" class="form-check-input ms-0" type="checkbox" autocomplete="off">
                            </div>
@@ -2268,7 +1527,13 @@
       <!-- Offcanvas content -->
       <div class="offcanvas-body">
          <h5>Content Here</h5>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente eos nihil earum aliquam quod in dolor, aspernatur obcaecati et at. Dicta, ipsum aut, fugit nam dolore porro non est totam sapiente animi recusandae obcaecati dolorum, rem ullam cumque. Illum quidem reiciendis autem neque excepturi odit est accusantium, facilis provident molestias, dicta obcaecati itaque ducimus fuga iure in distinctio voluptate nesciunt dignissimos rem error a. Expedita officiis nam dolore dolores ea. Soluta repellendus delectus culpa quo. Ea tenetur impedit error quod exercitationem ut ad provident quisquam omnis! Nostrum quasi ex delectus vero, facilis aut recusandae deleniti beatae. Qui velit commodi inventore.</p>
+         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente eos nihil earum aliquam quod in dolor,
+            aspernatur obcaecati et at. Dicta, ipsum aut, fugit nam dolore porro non est totam sapiente animi recusandae
+            obcaecati dolorum, rem ullam cumque. Illum quidem reiciendis autem neque excepturi odit est accusantium,
+            facilis provident molestias, dicta obcaecati itaque ducimus fuga iure in distinctio voluptate nesciunt
+            dignissimos rem error a. Expedita officiis nam dolore dolores ea. Soluta repellendus delectus culpa quo. Ea
+            tenetur impedit error quod exercitationem ut ad provident quisquam omnis! Nostrum quasi ex delectus vero,
+            facilis aut recusandae deleniti beatae. Qui velit commodi inventore.</p>
       </div>
 
    </div>
@@ -2296,12 +1561,14 @@
    <script src="./assets/js/demo-purpose-only.js"></script>
 
 
-   <!-- Chart JS Scripts [ OPTIONAL ] -->
-   <script src="./assets/vendors/chart.js/chart.umd.min.js"></script>
+   <!-- Tabulator Scripts [ OPTIONAL ] -->
+   <script src="./assets/vendors/tabulator/tabulator.min.js"></script>
 
 
    <!-- Initialize [ SAMPLE ] -->
-   <script src="./assets/pages/dashboard-1.js"></script>
+   <script src="./assets/pages/tabulator.js"></script>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 </body>
